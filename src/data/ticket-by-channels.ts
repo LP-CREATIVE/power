@@ -1,22 +1,22 @@
 export const ticketByChannels = [
   {
-    type: "Email",
+    type: "WR/DB",
     value: 2013,
   },
   {
-    type: "Live Chat",
+    type: "OL/DL",
     value: 834,
   },
   {
-    type: "Contact Form",
+    type: "RB/LB",
     value: 276,
   },
   {
-    type: "Messenger",
+    type: "QB",
     value: 250,
   },
   {
-    type: "WhatsApp",
+    type: "K/P",
     value: 103,
   },
 ];
