@@ -4,4 +4,4 @@ export const customerSatisfication = {
   negative: 0.05,
 };
 
-export const totalCustomers = 156;
+export const totalCustomers = 66;
