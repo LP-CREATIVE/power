@@ -22,8 +22,8 @@ const calMetricCardValue = (
 
 export default function AverageTicketsCreated() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
-  const avgCreated = calMetricCardValue(ticketChartData, "created");
-  const avgResolved = calMetricCardValue(ticketChartData, "resolved");
+  const avgCreated = calMetricCardValue(ticketChartData, "Total");
+  const avgResolved = calMetricCardValue(ticketChartData, "Completed");
 
   return (
     <section className="flex h-full flex-col gap-2">
