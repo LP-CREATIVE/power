@@ -11,36 +11,35 @@ import MetricCard from "./components/metric-card";
 
 const calMetricCardValue = (
   data: TicketMetric[],
-  type: "Total" | "Completed"
-): number => {
+  type: "created" | "resolved",
+) => {
   const filteredData = data.filter((item) => item.type === type);
-  if (filteredData.length === 0) return 0;
   return Math.round(
     filteredData.reduce((acc, curr) => acc + curr.count, 0) /
-      filteredData.length
+      filteredData.length,
   );
 };
 
 export default function AverageTicketsCreated() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
-  const avgCreated = calMetricCardValue(ticketChartData, "Total");
-  const avgResolved = calMetricCardValue(ticketChartData, "Completed");
+  const avgCreated = calMetricCardValue(ticketChartData, "created");
+  const avgResolved = calMetricCardValue(ticketChartData, "resolved");
 
   return (
     <section className="flex h-full flex-col gap-2">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <ChartTitle title="Weekly Performance Report" icon={FilePlus2} />
+        <ChartTitle title="Average Tickets Created" icon={FilePlus2} />
         <DatePickerWithRange className="" />
       </div>
       <div className="flex flex-wrap">
         <div className="my-4 flex w-52 shrink-0 flex-col justify-center gap-6">
           <MetricCard
-            title="Total Reps Tracked"
+            title="Avg. Tickets Created"
             value={avgCreated}
             color="#60C2FB"
           />
           <MetricCard
-            title="Effective Reps Completed"
+            title="Avg. Tickets Resolved"
             value={avgResolved}
             color="#3161F8"
           />
