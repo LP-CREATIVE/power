@@ -8,19 +8,19 @@ import LinearProgress from "./components/linear-progress";
 
 const customerSatisficationOptions = [
   {
-    label: "Positive",
+    label: "Improved",
     color: "#5fb67a",
     percentage: customerSatisfication.positive,
     icon: <ThumbsUp className="h-6 w-6" stroke="#5fb67a" fill="#5fb67a" />,
   },
   {
-    label: "Neutral",
+    label: "Maintained",
     color: "#f5c36e",
     percentage: customerSatisfication.neutral,
     icon: <ThumbsUp className="h-6 w-6" stroke="#f5c36e" fill="#f5c36e" />,
   },
   {
-    label: "Negative",
+    label: "Underperformed",
     color: "#da6d67",
     percentage: customerSatisfication.negative,
     icon: <ThumbsDown className="h-6 w-6" stroke="#da6d67" fill="#da6d67" />,
@@ -30,7 +30,7 @@ const customerSatisficationOptions = [
 export default function CustomerSatisfication() {
   return (
     <section className="flex h-full flex-col gap-2">
-      <ChartTitle title="Customer Satisfication" icon={SmilePlus} />
+      <ChartTitle title="Team Improvement" icon={SmilePlus} />
       <div className="my-4 flex h-full items-center justify-between">
         <div className="mx-auto grid w-full grid-cols-2 gap-6">
           <TotalCustomers />
