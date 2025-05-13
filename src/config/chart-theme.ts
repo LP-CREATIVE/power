@@ -4,7 +4,7 @@ export const customLightTheme: Partial<ITheme> = {
   type: "light",
   background: "0 0% 98%", // raw HSL
   fontFamily: "'Inter', sans-serif",
-  components: {
+  component: {
     axis: {
       domainLine: { style: { stroke: "0 0% 85%" } },
       grid: { style: { stroke: "0 0% 90%" } },
@@ -23,7 +23,7 @@ export const customDarkTheme: Partial<ITheme> = {
   type: "dark",
   background: "0 0% 7%",
   fontFamily: "'Inter', sans-serif",
-  components: {
+  component: {
     axis: {
       domainLine: { style: { stroke: "0 0% 25%" } },
       grid: { style: { stroke: "0 0% 20%" } },
@@ -37,4 +37,5 @@ export const customDarkTheme: Partial<ITheme> = {
     },
   },
 };
+
 
