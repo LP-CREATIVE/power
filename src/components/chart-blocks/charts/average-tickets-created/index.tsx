@@ -11,7 +11,7 @@ import MetricCard from "./components/metric-card";
 
 const calMetricCardValue = (
   data: TicketMetric[],
-  type: "created" | "resolved",
+  type: "Total" | "Completed",
 ) => {
   const filteredData = data.filter((item) => item.type === type);
   return Math.round(
