@@ -5,7 +5,7 @@ import Chart from "./chart";
 export default function TicketByChannels() {
   return (
     <section className="flex h-full flex-col gap-2">
-      <ChartTitle title="Intensity By Position" icon={Rss} />
+      <ChartTitle title="Reps By Position" icon={Rss} />
       <div className="relative flex min-h-64 flex-grow flex-col justify-center">
         <Chart />
       </div>
