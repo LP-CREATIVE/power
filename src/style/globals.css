@@ -38,9 +38,9 @@
   --radius: 0.5rem;
 
   /* Chart colors */
-  --chart-1: 0 100% 45%;
-  --chart-2: 0 70% 30%;
-  --chart-3: 0 0% 15%;
+  --chart-1: 0 10% 5%;
+  --chart-2: 0 7% 3%;
+  --chart-3: 0 50% 15%;
   --chart-4: 0 0% 40%;
   --chart-5: 0 0% 70%;
 }
