@@ -55,7 +55,7 @@ export default function Chart() {
 
   useEffect(() => {
     const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
-    // console.log("🟥 --chart-1 resolves to:", chart1); // disabled for production build
+    console.log("🟥 --chart-1 resolves to:", chart1); // disabled for production build
   }, []);
 
   return <VChart spec={spec} />;
