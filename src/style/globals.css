@@ -5,27 +5,39 @@
 
 @layer base {
   :root {
-  --background: 0 0% 100%;                /* white */
-  --foreground: 0 0% 10%;                 /* near-black text */
-  --card: 0 0% 98%;                       /* off-white card */
+--background: 0 0% 98%;                  /* off-white */
+  --foreground: 0 0% 10%;                  /* near-black */
+
+  --card: 0 0% 100%;
   --card-foreground: 0 0% 10%;
+
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 10%;
-  --primary: 0 100% 50%;                  /* red */
-  --primary-foreground: 0 0% 100%;        /* white on red */
-  --secondary: 0 80% 25%;                 /* dark red / maroon */
+
+  --primary: 0 100% 50%;                   /* vibrant red */
+  --primary-foreground: 0 0% 100%;         /* white on red */
+
+  --primary-hover: 0 100% 40%;             /* darker red for hover */
+
+  --secondary: 0 80% 25%;                  /* deep maroon */
   --secondary-foreground: 0 0% 100%;
-  --muted: 0 0% 85%;                      /* light grey */
+
+  --muted: 0 0% 90%;                       /* light gray */
   --muted-foreground: 0 0% 30%;
-  --accent: 0 100% 40%;                   /* deeper red */
+
+  --accent: 0 90% 45%;                     /* deeper red */
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 80% 45%;               /* red warning */
+
+  --destructive: 0 80% 45%;                /* alert red */
   --destructive-foreground: 0 0% 100%;
-  --border: 0 0% 90%;                     /* light grey border */
+
+  --border: 0 0% 85%;                      /* light gray border */
   --input: 0 0% 95%;
-  --ring: 0 100% 50%;                     /* red ring for focus */
+  --ring: 0 100% 45%;                      /* focus ring red */
+
   --radius: 0.5rem;
 
+  /* Chart colors */
   --chart-1: 0 100% 45%;
   --chart-2: 0 70% 30%;
   --chart-3: 0 0% 15%;
@@ -34,28 +46,37 @@
 }
 
 .dark {
-  --background: 0 0% 5%;
+  --background: 0 0% 7%;                   /* almost black */
   --foreground: 0 0% 100%;
-  --card: 0 0% 10%;
+
+  --card: 0 0% 12%;
   --card-foreground: 0 0% 100%;
-  --popover: 0 0% 10%;
+
+  --popover: 0 0% 12%;
   --popover-foreground: 0 0% 100%;
-  --primary: 0 100% 50%;
+
+  --primary: 0 100% 60%;                   /* brighter red for dark bg */
   --primary-foreground: 0 0% 100%;
+  --primary-hover: 0 100% 50%;
+
   --secondary: 0 80% 25%;
   --secondary-foreground: 0 0% 100%;
+
   --muted: 0 0% 20%;
   --muted-foreground: 0 0% 70%;
-  --accent: 0 100% 40%;
+
+  --accent: 0 100% 50%;
   --accent-foreground: 0 0% 100%;
+
   --destructive: 0 80% 45%;
   --destructive-foreground: 0 0% 100%;
+
   --border: 0 0% 25%;
   --input: 0 0% 20%;
-  --ring: 0 100% 50%;
-  
-  --chart-1: 0 100% 45%;
-  --chart-2: 0 70% 30%;
+  --ring: 0 100% 60%;
+
+  --chart-1: 0 100% 60%;
+  --chart-2: 0 80% 45%;
   --chart-3: 0 0% 90%;
   --chart-4: 0 0% 60%;
   --chart-5: 0 0% 40%;
