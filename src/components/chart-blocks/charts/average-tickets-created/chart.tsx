@@ -17,15 +17,13 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
   ],
   xField: "date",
   yField: "count",
-  
-seriesField: "type",
+  seriesField: "type",
 
-color: [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-],
+  color: [
+    "hsl(var(--chart-1))",
+    "hsl(var(--chart-2))",
+  ],
 
-  },
   padding: [10, 0, 10, 0],
   legends: {
     visible: false,
@@ -43,14 +41,13 @@ color: [
         },
       },
     },
- style: {
-  cornerRadius: [12, 12, 12, 12],
-  zIndex: (datum) => datum.type === "resolved" ? 2 : 1,
-},
-
+    style: {
+      cornerRadius: [12, 12, 12, 12],
+      zIndex: (datum) => datum.type === "resolved" ? 2 : 1,
     },
   },
 });
+
 
 export default function Chart() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
