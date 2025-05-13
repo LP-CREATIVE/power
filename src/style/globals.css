@@ -5,43 +5,44 @@
 
 @layer base {
 :root {
-  --background: 0 0% 100%; /* white */
-  --foreground: 0 0% 10%;  /* near-black for text */
+  --background: hsl(0, 0%, 100%);            /* white */
+  --foreground: hsl(0, 0%, 10%);             /* near-black text */
 
-  --card: 0 0% 98%; /* off-white for subtle contrast */
-  --card-foreground: 0 0% 10%;
+  --card: hsl(0, 0%, 98%);                   /* off-white card */
+  --card-foreground: hsl(0, 0%, 10%);
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 10%;
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(0, 0%, 10%);
 
-  --primary: 0 100% 50%; /* pure red */
-  --primary-foreground: 0 0% 100%; /* white text on red */
+  --primary: hsl(0, 100%, 50%);              /* red */
+  --primary-foreground: hsl(0, 0%, 100%);    /* white on red */
 
-  --secondary: 0 0% 25%; /* dark red / maroon */
-  --secondary-foreground: 0 0% 100%;
+  --secondary: hsl(0, 80%, 25%);             /* dark red / maroon */
+  --secondary-foreground: hsl(0, 0%, 100%);
 
-  --muted: 0 0% 85%; /* light gray */
-  --muted-foreground: 0 0% 30%;
+  --muted: hsl(0, 0%, 85%);                  /* light grey */
+  --muted-foreground: hsl(0, 0%, 30%);
 
-  --accent: 0 100% 40%; /* deeper red accent */
-  --accent-foreground: 0 0% 100%;
+  --accent: hsl(0, 100%, 40%);               /* deeper red */
+  --accent-foreground: hsl(0, 0%, 100%);
 
-  --destructive: 0 80% 45%; /* red, used for danger alerts */
-  --destructive-foreground: 0 0% 100%;
+  --destructive: hsl(0, 80%, 45%);           /* red warning */
+  --destructive-foreground: hsl(0, 0%, 100%);
 
-  --border: 0 0% 90%; /* light gray border */
-  --input: 0 0% 95%;
-  --ring: 0 100% 50%; /* red ring for focus */
+  --border: hsl(0, 0%, 90%);                 /* light grey border */
+  --input: hsl(0, 0%, 95%);
+  --ring: hsl(0, 100%, 50%);                 /* red ring for focus */
 
   --radius: 0.5rem;
 
-  /* Chart colors using red-black-greyscale palette */
-  --chart-1: 0 100% 45%;  /* bold red */
-  --chart-2: 0 60% 30%;   /* dark red */
-  --chart-3: 0 0% 15%;    /* black */
-  --chart-4: 0 0% 40%;    /* dark grey */
-  --chart-5: 0 0% 70%;    /* light grey */
+  /* Chart palette (red–black–gray scale) */
+  --chart-1: hsl(0, 100%, 45%);              /* bright red */
+  --chart-2: hsl(0, 70%, 30%);               /* dark red */
+  --chart-3: hsl(0, 0%, 15%);                /* black */
+  --chart-4: hsl(0, 0%, 40%);                /* dark gray */
+  --chart-5: hsl(0, 0%, 70%);                /* light gray */
 }
+
 
 
   .dark {
