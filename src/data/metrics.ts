@@ -15,7 +15,7 @@ export const metrics = [
     change: 0.08,
   },
   {
-    title: "Workout Score",
+    title: "Intensity Score",
     value: "81",
     change: .10,
   },
