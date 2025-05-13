@@ -1,4 +1,4 @@
-ly"use client";
+"use client";
 
 import { useAtomValue } from "jotai";
 import { FilePlus2 } from "lucide-react";
