@@ -43,11 +43,11 @@ color: [
         },
       },
     },
-    style: {
-      cornerRadius: [12, 12, 12, 12],
-      zIndex: (datum) => {
-        return datum.type === "resolved" ? 2 : 1;
-      },
+ style: {
+  cornerRadius: [12, 12, 12, 12],
+  zIndex: (datum) => datum.type === "resolved" ? 2 : 1,
+},
+
     },
   },
 });
