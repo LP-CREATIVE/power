@@ -17,6 +17,16 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
   xField: "date",
   yField: "count",
   seriesField: "type",
+
+color: {
+  type: "ordinal",
+  field: "type",
+  range: [
+    "hsl(var(--chart-1))",
+    "hsl(var(--chart-2))",
+  ],
+},
+
   padding: [10, 0, 10, 0],
   legends: {
     visible: false,
