@@ -4,19 +4,20 @@ import { useAtomValue } from "jotai";
 import { FilePlus2 } from "lucide-react";
 import { ticketChartDataAtom } from "@/lib/atoms";
 import type { TicketMetric } from "@/types/types";
-import ChartTitle from "../../components/chart-title";
+import ChartTitle from "@/components/chart-title";
 import Chart from "./chart";
 import { DatePickerWithRange } from "./components/date-range-picker";
 import MetricCard from "./components/metric-card";
 
 const calMetricCardValue = (
   data: TicketMetric[],
-  type: "Total" | "Completed",
-) => {
+  type: "Total" | "Completed"
+): number => {
   const filteredData = data.filter((item) => item.type === type);
+  if (filteredData.length === 0) return 0;
   return Math.round(
     filteredData.reduce((acc, curr) => acc + curr.count, 0) /
-      filteredData.length,
+      filteredData.length
   );
 };
 
