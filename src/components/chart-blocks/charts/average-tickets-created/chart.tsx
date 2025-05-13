@@ -1,6 +1,7 @@
 "use client";
 
 import { useAtomValue } from "jotai";
+import { useEffect } from "react";
 import { VChart } from "@visactor/react-vchart";
 import type { IBarChartSpec } from "@visactor/vchart";
 import { ticketChartDataAtom } from "@/lib/atoms";
@@ -17,16 +18,14 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
   xField: "date",
   yField: "count",
   seriesField: "type",
-
-color: {
-  type: "ordinal",
-  field: "type",
-  range: [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-  ],
-},
-
+  color: {
+    type: "ordinal",
+    field: "type",
+    range: [
+      "hsl(var(--chart-1))",
+      "hsl(var(--chart-2))",
+    ],
+  },
   padding: [10, 0, 10, 0],
   legends: {
     visible: false,
@@ -56,5 +55,12 @@ color: {
 export default function Chart() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
   const spec = generateSpec(ticketChartData);
+
+  useEffect(() => {
+    const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
+    console.log("🟥 --chart-1 resolves to:", chart1);
+  }, []);
+
   return <VChart spec={spec} />;
 }
+
