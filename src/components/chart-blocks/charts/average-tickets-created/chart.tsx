@@ -54,9 +54,12 @@ export default function Chart() {
   const spec = generateSpec(ticketChartData);
 
   useEffect(() => {
-    const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
-    console.log("🟥 --chart-1 resolves to:", chart1); // disabled for production build
-  }, []);
+  const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
+  if (process.env.NODE_ENV === "development") {
+    console.log("🟥 --chart-1 resolves to:", chart1);
+  }
+}, []);
+
 
   return <VChart spec={spec} />;
 }
