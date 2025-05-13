@@ -6,7 +6,7 @@ export const metrics = [
   },
   {
     title: "Incomplete Reps",
-    value: "1,500",
+    value: "1,503",
     change: -0.12,
   },
   {
