@@ -56,9 +56,10 @@ export default function Chart() {
   useEffect(() => {
   const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
   if (process.env.NODE_ENV === "development") {
-    console.log("🟥 --chart-1 resolves to:", chart1);
+    console.debug("🟥 --chart-1 resolves to:", chart1);
   }
 }, []);
+
 
 
   return <VChart spec={spec} />;
