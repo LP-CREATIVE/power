@@ -4,8 +4,7 @@ import { useAtomValue } from "jotai";
 import { FilePlus2 } from "lucide-react";
 import { ticketChartDataAtom } from "@/lib/atoms";
 import type { TicketMetric } from "@/types/types";
-import ChartTitle from "../../chart-title";
-
+import ChartTitle from "../../components/chart-title";
 import Chart from "./chart";
 import { DatePickerWithRange } from "./components/date-range-picker";
 import MetricCard from "./components/metric-card";
@@ -53,3 +52,4 @@ export default function AverageTicketsCreated() {
     </section>
   );
 }
+
