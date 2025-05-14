@@ -33,8 +33,8 @@ function ChangeIndicator({ change }: { change: number }) {
       className={cn(
         "flex items-center rounded-sm px-1 py-0.5 text-xs text-muted-foreground",
         change > 0
-     ? "bg-red-100 text-red-600 dark:bg-black"
-: "bg-gray-100 text-gray-700 dark:bg-gray-800"
+   ? "bg-green-50 text-green-500 dark:bg-green-950"
+          : "bg-red-50 text-red-500 dark:bg-red-950",
 
       )}
     >
