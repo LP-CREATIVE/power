@@ -53,7 +53,7 @@ export default function Chart() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
   const spec = generateSpec(ticketChartData);
 
-
+return <VChart spec={spec} />;
 }
 
 
