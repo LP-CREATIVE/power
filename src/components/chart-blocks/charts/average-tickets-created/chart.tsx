@@ -56,3 +56,4 @@ export default function Chart() {
   return <VChart spec={spec} />;
 }
 
+
