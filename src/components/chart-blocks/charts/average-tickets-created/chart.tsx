@@ -20,8 +20,9 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
   seriesField: "type",
 
   color: [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
+  "hsl(0, 100%, 50%)",   // vibrant red
+  "hsl(0, 0%, 0%)",       // black
+
   ],
 
   padding: [10, 0, 10, 0],
