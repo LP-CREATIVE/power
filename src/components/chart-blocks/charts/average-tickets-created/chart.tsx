@@ -52,11 +52,8 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
 export default function Chart() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
   const spec = generateSpec(ticketChartData);
-
-  useEffect(() => {
-  const chart1 = getComputedStyle(document.documentElement).getPropertyValue("--chart-1").trim();
-  // Use chart1 here if needed for something — otherwise remove this entirely
-}, []);
+}
+ 
 
 
 
