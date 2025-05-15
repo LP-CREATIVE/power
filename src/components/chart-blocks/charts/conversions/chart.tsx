@@ -16,6 +16,11 @@ const spec: ICirclePackingChartSpec = {
   categoryField: "name",
   valueField: "value",
   drill: true,
+  color: [
+  "hsl(0, 100%, 50%)",  // red
+  "hsl(0, 0%, 0%)",     // black
+  "hsl(0, 0%, 50%)",    // gray
+],
   padding: 0,
   layoutPadding: 5,
   label: {
