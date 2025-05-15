@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { powerlogo } from "@/components/icons";
+import { powerlogo } from "@/components/public";
 
 export default function VisActor() {
   return (
