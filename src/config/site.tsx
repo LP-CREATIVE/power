@@ -20,7 +20,7 @@ export const navigations: Navigation[] = [
   },
   {
     icon: MessagesSquare,
-    name: "Ticket",
-    href: "/ticket",
+    name: "Roster",
+    href: "/roster",
   },
 ];
