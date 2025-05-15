@@ -41,6 +41,7 @@ const spec: IPieChartSpec = {
   categoryField: "type",
    color: [
   "hsl(0, 100%, 50%)",  // red
+     "hsl(0, 100%, 30%)",  // red
   "hsl(0, 0%, 0%)",     // black
   "hsl(0, 0%, 60%)",   // gray
      "hsl(0, 0%, 30%)",   // gray
