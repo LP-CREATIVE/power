@@ -39,6 +39,12 @@ const spec: IPieChartSpec = {
   ],
   valueField: "value",
   categoryField: "type",
+   color: [
+  "hsl(0, 100%, 50%)",  // red
+  "hsl(0, 0%, 0%)",     // black
+  "hsl(0, 0%, 60%)",   // gray
+     "hsl(0, 0%, 30%)",   // gray
+],
   outerRadius: 1,
   innerRadius: 0.88,
   startAngle: -180,
