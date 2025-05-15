@@ -20,7 +20,7 @@ const spec: ICirclePackingChartSpec = {
   layoutPadding: 5,
   label: {
     style: {
-      fill: "white",
+      fill: "black",
       stroke: false,
       visible: (d) => d.depth === 0,
       text: (d) => addThousandsSeparator(d.value),
