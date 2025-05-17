@@ -13,8 +13,8 @@ export default function DashboardLayout({
           <Image
             src="/powerlogo.avif"
             alt="Power Logo"
-            width={240}
-            height={240}
+            width={180}
+            height={180}
             className="object-contain"
           />
         }
