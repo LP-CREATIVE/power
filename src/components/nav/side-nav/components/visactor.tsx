@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { powerlogo } from "@/components/public";
+import Image from "next/image";
 
 export default function VisActor() {
   return (
@@ -11,8 +11,13 @@ export default function VisActor() {
       <div className="dot-matrix absolute left-0 top-0 -z-10 h-full w-full" />
       <span className="text-xs text-muted-foreground">Powered by</span>
       <div className="flex items-center space-x-2">
-        <powerlogo size={24} />
-        <span className="text-md text-accent-foreground"></span>
+        <Image
+          src="/powerlogo.png"
+          alt="Power Logo"
+          width={24}
+          height={24}
+        />
+        <span className="text-md text-accent-foreground">Power</span>
       </div>
     </Link>
   );
