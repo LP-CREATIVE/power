@@ -1,4 +1,5 @@
 import { TopNav } from "@/components/nav";
+import Image from "next/image";
 
 export default function DashboardLayout({
   children,
@@ -7,7 +8,17 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <TopNav title="POWERBAND" />
+      <TopNav
+        title={
+          <Image
+            src="/powerlogo.avif"
+            alt="Power Logo"
+            width={120}
+            height={40}
+            className="object-contain"
+          />
+        }
+      />
       <main>{children}</main>
     </>
   );
