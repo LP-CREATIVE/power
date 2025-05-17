@@ -14,8 +14,8 @@ export default function VisActor() {
         <Image
           src="/powerlogo.avif"
           alt="Power Logo"
-          width={120}
-          height={120}
+          width={240}
+          height={240}
         />
       </div>
     </Link>
