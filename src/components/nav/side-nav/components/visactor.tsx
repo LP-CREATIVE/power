@@ -14,10 +14,9 @@ export default function VisActor() {
         <Image
           src="/powerlogo.avif"
           alt="Power Logo"
-          width={24}
-          height={24}
+          width={120}
+          height={120}
         />
-        <span className="text-md text-accent-foreground">POWERBAND</span>
       </div>
     </Link>
   );
