@@ -1,60 +1,68 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Container from "@/components/container";
 
 const roster = [
-  { number: 1, name: "Jaxon Carter", position: "QB", grade: "12" },
-  { number: 2, name: "Mason Rivera", position: "WR", grade: "11" },
-  { number: 3, name: "Ezra Wells", position: "RB", grade: "12" },
-  { number: 4, name: "Caleb Reed", position: "DB", grade: "10" },
-  { number: 5, name: "Logan Price", position: "LB", grade: "11" },
-  { number: 6, name: "Nolan Brooks", position: "WR", grade: "12" },
-  { number: 7, name: "Isaiah Hayes", position: "OL", grade: "12" },
-  { number: 8, name: "Carter Bryant", position: "DL", grade: "9" },
-  { number: 9, name: "Miles Griffin", position: "RB", grade: "11" },
-  { number: 10, name: "Brody King", position: "QB", grade: "10" },
+  { number: 1, name: "Lucas Phillips", position: "QB", grade: "12" },
+  { number: 7, name: "Jayden Smith", position: "WR", grade: "11" },
+  { number: 22, name: "Malik Johnson", position: "RB", grade: "10" },
+  { number: 44, name: "Ethan Brown", position: "LB", grade: "12" },
+  { number: 55, name: "Noah Davis", position: "DL", grade: "11" },
 ];
 
 export default function RosterPage() {
   const [search, setSearch] = useState("");
-  const filteredRoster = roster.filter(
-    (player) =>
-      player.name.toLowerCase().includes(search.toLowerCase()) ||
-      player.position.toLowerCase().includes(search.toLowerCase()) ||
-      player.grade === search
+
+  const filtered = roster.filter((player) =>
+    player.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Team Roster</h1>
-        <Input
-          placeholder="Search by name, position, or grade"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-sm"
-        />
-      </div>
+    <Container className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Team Roster</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredRoster.map((player) => (
-          <Card
-            key={player.number}
-            className="hover:scale-[1.03] transition-transform duration-200"
-          >
-            <CardContent className="p-4 space-y-2">
-              <div className="text-xl font-semibold flex justify-between">
-                #{player.number} <Badge>{player.position}</Badge>
-              </div>
-              <div className="text-lg">{player.name}</div>
-              <div className="text-muted-foreground text-sm">Grade: {player.grade}</div>
-            </CardContent>
-          </Card>
-        ))}
+      <input
+        type="text"
+        placeholder="Search player..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-6 w-full max-w-sm rounded-md border border-border bg-background px-4 py-2 text-sm text-foreground"
+      />
+
+      <div className="overflow-x-auto rounded-lg shadow">
+        <table className="min-w-full table-auto border border-border bg-card text-sm text-left">
+          <thead className="bg-muted text-muted-foreground uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3">#</th>
+              <th className="px-4 py-3">Name</th>
+              <th className="px-4 py-3">Position</th>
+              <th className="px-4 py-3">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((player) => (
+              <tr
+                key={player.number}
+                className="border-t border-border hover:bg-muted transition"
+              >
+                <td className="px-4 py-2 font-semibold text-primary">
+                  {player.number}
+                </td>
+                <td className="px-4 py-2">{player.name}</td>
+                <td className="px-4 py-2">{player.position}</td>
+                <td className="px-4 py-2">{player.grade}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {filtered.length === 0 && (
+          <div className="p-6 text-muted-foreground text-center">
+            No players found.
+          </div>
+        )}
       </div>
-    </div>
+    </Container>
   );
 }
