@@ -12,12 +12,12 @@ export default function VisActor() {
       <span className="text-xs text-muted-foreground">Powered by</span>
       <div className="flex items-center space-x-2">
         <Image
-          src="/powerlogo.png"
+          src="/powerlogo.avif"
           alt="Power Logo"
           width={24}
           height={24}
         />
-        <span className="text-md text-accent-foreground">Power</span>
+        <span className="text-md text-accent-foreground">POWERBAND</span>
       </div>
     </Link>
   );
