@@ -11,7 +11,7 @@ const roster = [
   { number: 55, name: "Noah Davis", position: "DL", grade: "11" },
 ];
 
-export default function TicketPage() {
+export default function RosterPage() {
   const [search, setSearch] = useState("");
 
   const filtered = roster.filter((player) =>
