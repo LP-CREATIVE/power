@@ -22,6 +22,11 @@ export default function AttendancePage() {
   const [attendance, setAttendance] = useState<Record<string, boolean>>({});
   const [autoNotify, setAutoNotify] = useState(true);
 
+  const handleSave = () => {
+  alert("Attendance saved!");
+};
+
+
   const toggleAttendance = (athlete: string) => {
     setAttendance(prev => ({ ...prev, [athlete]: !prev[athlete] }));
   };
