@@ -5,8 +5,13 @@ import { usePathname } from "next/navigation";
 import { navigations } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-export default function Navigation() {
+interface NavigationProps {
+  onNavigate?: () => void;
+}
+
+export default function Navigation({ onNavigate }: NavigationProps) {
   const pathname = usePathname();
+
   return (
     <nav className="flex flex-grow flex-col gap-y-1 p-2">
       {navigations.map((navigation) => {
@@ -15,6 +20,7 @@ export default function Navigation() {
           <Link
             key={navigation.name}
             href={navigation.href}
+            onClick={onNavigate}
             className={cn(
               "flex items-center rounded-md px-2 py-1.5 hover:bg-slate-200 dark:hover:bg-slate-800",
               pathname === navigation.href
@@ -35,3 +41,4 @@ export default function Navigation() {
     </nav>
   );
 }
+
