@@ -23,4 +23,9 @@ export const navigations: Navigation[] = [
     name: "Roster",
     href: "/roster",
   },
+   {
+    icon: Dumbbell,
+    name: "Workouts",
+    href: "/workouts",
+  },
 ];
