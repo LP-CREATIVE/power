@@ -1,4 +1,4 @@
-import { Gauge, type LucideIcon, Users, Dumbbell, ClipboardList, MessageBoard } from "lucide-react";
+import { Gauge, type LucideIcon, Users, Dumbbell, ClipboardList, MessagesSquare } from "lucide-react";
 
 export type SiteConfig = typeof siteConfig;
 export type Navigation = {
@@ -34,7 +34,7 @@ export const navigations: Navigation[] = [
     href: "/attendance",
   },
    {
-    icon: MessageBoard,
+    icon: MessagesSquare,
     name: "Messages",
     href: "/messages",
   },
