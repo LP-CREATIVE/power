@@ -14,8 +14,8 @@ export default function RosterLayout({
           <Image
             src="/powerlogo.avif"
             alt="Power Logo"
-            width={100}
-            height={40}
+            width={180}
+            height={180}
             className="object-contain"
           />
         }
