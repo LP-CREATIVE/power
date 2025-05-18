@@ -58,15 +58,32 @@ const roster = [
   { number: 79, name: "Gadiel Gomez", position: "OL, DL", grade: "SR" },
   { number: 86, name: "Brandon Cook", position: "WR, DB", grade: "FR" },
   { number: 88, name: "Zachary Cook", position: "WR, DB", grade: "FR" },
-
 ];
 
 export default function RosterPage() {
   const [search, setSearch] = useState("");
+  const [sortKey, setSortKey] = useState("number");
+  const [ascending, setAscending] = useState(true);
 
-  const filtered = roster.filter((player) =>
-    player.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = roster
+    .filter((player) =>
+      player.name.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      const aVal = a[sortKey].toString().toLowerCase();
+      const bVal = b[sortKey].toString().toLowerCase();
+      return ascending
+        ? aVal.localeCompare(bVal, undefined, { numeric: true })
+        : bVal.localeCompare(aVal, undefined, { numeric: true });
+    });
+
+  const handleSort = (key) => {
+    if (key === sortKey) setAscending(!ascending);
+    else {
+      setSortKey(key);
+      setAscending(true);
+    }
+  };
 
   return (
     <Container className="p-6">
@@ -84,10 +101,10 @@ export default function RosterPage() {
         <table className="min-w-full table-auto border border-border bg-card text-sm text-left">
           <thead className="bg-muted text-muted-foreground uppercase tracking-wider">
             <tr>
-              <th className="px-4 py-3">#</th>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Position</th>
-              <th className="px-4 py-3">Grade</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("number")}>#</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("name")}>Name</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("position")}>Position</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("grade")}>Grade</th>
             </tr>
           </thead>
           <tbody>
@@ -116,3 +133,4 @@ export default function RosterPage() {
     </Container>
   );
 }
+
