@@ -7,15 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { GripVertical, X } from "lucide-react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { X, ArrowUp, ArrowDown } from "lucide-react";
 
 // Define types
 type Exercise = {
@@ -72,46 +64,18 @@ export default function WorkoutPage() {
     }));
   };
 
-  const handleDragEnd = (event: any) => {
-    const { active, over } = event;
-    if (active.id !== over?.id) {
-      const oldIndex = newWorkout.exercises.findIndex(ex => ex.id === active.id);
-      const newIndex = newWorkout.exercises.findIndex(ex => ex.id === over?.id);
-      const sorted = arrayMove(newWorkout.exercises, oldIndex, newIndex);
-      setNewWorkout(prev => ({ ...prev, exercises: sorted }));
-    }
+  const moveExercise = (index: number, direction: "up" | "down") => {
+    const list = [...newWorkout.exercises];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= list.length) return;
+    [list[index], list[targetIndex]] = [list[targetIndex], list[index]];
+    setNewWorkout(prev => ({ ...prev, exercises: list }));
   };
 
   const saveWorkout = () => {
     setWorkouts([...workouts, newWorkout]);
     setNewWorkout({ title: "", date: "", assignedTo: "", exercises: [] });
     setRepeatWeekly(false);
-  };
-
-  const SortableExercise = ({ ex }: { ex: Exercise }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: ex.id });
-    const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
-    };
-
-    return (
-      <li ref={setNodeRef} style={style} {...attributes} className="flex items-center justify-between border rounded px-3 py-2 bg-white shadow">
-        <div className="flex items-center gap-2">
-          <GripVertical {...listeners} className="text-gray-400 cursor-grab" />
-          <div>
-            <div className="font-medium">{ex.name} ({ex.category})</div>
-            <div className="text-xs text-muted-foreground">
-              {ex.sets} sets x {ex.reps} reps @ {ex.weight} ({ex.rest} rest)
-              {ex.notes && ` – ${ex.notes}`}
-            </div>
-          </div>
-        </div>
-        <button onClick={() => removeExercise(ex.id)}>
-          <X className="text-red-500 hover:text-red-700" />
-        </button>
-      </li>
-    );
   };
 
   return (
@@ -151,17 +115,25 @@ export default function WorkoutPage() {
             </div>
             <Button onClick={addExercise} className="mt-3">+ Add Exercise</Button>
 
-            {/* Live preview with drag-and-drop */}
             {newWorkout.exercises.length > 0 && (
-              <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={newWorkout.exercises.map(e => e.id)} strategy={verticalListSortingStrategy}>
-                  <ul className="mt-4 space-y-2">
-                    {newWorkout.exercises.map(ex => (
-                      <SortableExercise key={ex.id} ex={ex} />
-                    ))}
-                  </ul>
-                </SortableContext>
-              </DndContext>
+              <ul className="mt-4 space-y-2">
+                {newWorkout.exercises.map((ex, index) => (
+                  <li key={ex.id} className="flex items-start justify-between border rounded px-3 py-2 bg-white shadow">
+                    <div className="flex-1">
+                      <div className="font-medium">{ex.name} ({ex.category})</div>
+                      <div className="text-xs text-muted-foreground">
+                        {ex.sets} sets x {ex.reps} reps @ {ex.weight} ({ex.rest} rest)
+                        {ex.notes && ` – ${ex.notes}`}
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 pl-4">
+                      <button onClick={() => moveExercise(index, "up")}><ArrowUp className="h-4 w-4 text-gray-500" /></button>
+                      <button onClick={() => moveExercise(index, "down")}><ArrowDown className="h-4 w-4 text-gray-500" /></button>
+                      <button onClick={() => removeExercise(ex.id)}><X className="h-4 w-4 text-red-500 hover:text-red-700" /></button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
 
