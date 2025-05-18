@@ -34,7 +34,7 @@ export default function SideNav() {
         )}
       >
         <User />
-        <Navigation />
+        <Navigation onNavigate={() => setIsOpen(false)} />
         <VisActor />
       </aside>
     </>
