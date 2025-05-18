@@ -1,6 +1,26 @@
 "use client";
 
 import { useState } from "react";
+
+
+type Exercise = {
+  name: string;
+  sets: string;
+  reps: string;
+  weight: string;
+  rest: string;
+  notes: string;
+};
+
+
+type Workout = {
+  title: string;
+  date: string;
+  assignedTo: string;
+  exercises: Exercise[];
+};
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,10 +28,22 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 
-export default function WorkoutPage() {
-  const [workouts, setWorkouts] = useState([]);
-  const [newWorkout, setNewWorkout] = useState({ title: "", date: "", assignedTo: "", exercises: [] });
-  const [exercise, setExercise] = useState({ name: "", sets: "", reps: "", weight: "", rest: "", notes: "" });
+export default function WorkoutPage() {const [workouts, setWorkouts] = useState<Workout[]>([]);
+const [newWorkout, setNewWorkout] = useState<Workout>({
+  title: "",
+  date: "",
+  assignedTo: "",
+  exercises: [],
+});
+const [exercise, setExercise] = useState<Exercise>({
+  name: "",
+  sets: "",
+  reps: "",
+  weight: "",
+  rest: "",
+  notes: "",
+});
+
   const [repeatWeekly, setRepeatWeekly] = useState(false);
 
   const addExercise = () => {
