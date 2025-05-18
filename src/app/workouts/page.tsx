@@ -7,9 +7,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { GripVertical, X } from "lucide-react";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 // Define types
 type Exercise = {
+  id: string;
+  category: string;
   name: string;
   sets: string;
   reps: string;
@@ -34,6 +45,8 @@ export default function WorkoutPage() {
     exercises: [],
   });
   const [exercise, setExercise] = useState<Exercise>({
+    id: "",
+    category: "",
     name: "",
     sets: "",
     reps: "",
@@ -44,17 +57,61 @@ export default function WorkoutPage() {
   const [repeatWeekly, setRepeatWeekly] = useState(false);
 
   const addExercise = () => {
+    const newId = crypto.randomUUID();
     setNewWorkout(prev => ({
       ...prev,
-      exercises: [...prev.exercises, { ...exercise }],
+      exercises: [...prev.exercises, { ...exercise, id: newId }],
     }));
-    setExercise({ name: "", sets: "", reps: "", weight: "", rest: "", notes: "" });
+    setExercise({ id: "", category: "", name: "", sets: "", reps: "", weight: "", rest: "", notes: "" });
+  };
+
+  const removeExercise = (id: string) => {
+    setNewWorkout(prev => ({
+      ...prev,
+      exercises: prev.exercises.filter(ex => ex.id !== id),
+    }));
+  };
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over?.id) {
+      const oldIndex = newWorkout.exercises.findIndex(ex => ex.id === active.id);
+      const newIndex = newWorkout.exercises.findIndex(ex => ex.id === over?.id);
+      const sorted = arrayMove(newWorkout.exercises, oldIndex, newIndex);
+      setNewWorkout(prev => ({ ...prev, exercises: sorted }));
+    }
   };
 
   const saveWorkout = () => {
     setWorkouts([...workouts, newWorkout]);
     setNewWorkout({ title: "", date: "", assignedTo: "", exercises: [] });
     setRepeatWeekly(false);
+  };
+
+  const SortableExercise = ({ ex }: { ex: Exercise }) => {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: ex.id });
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+    };
+
+    return (
+      <li ref={setNodeRef} style={style} {...attributes} className="flex items-center justify-between border rounded px-3 py-2 bg-white shadow">
+        <div className="flex items-center gap-2">
+          <GripVertical {...listeners} className="text-gray-400 cursor-grab" />
+          <div>
+            <div className="font-medium">{ex.name} ({ex.category})</div>
+            <div className="text-xs text-muted-foreground">
+              {ex.sets} sets x {ex.reps} reps @ {ex.weight} ({ex.rest} rest)
+              {ex.notes && ` – ${ex.notes}`}
+            </div>
+          </div>
+        </div>
+        <button onClick={() => removeExercise(ex.id)}>
+          <X className="text-red-500 hover:text-red-700" />
+        </button>
+      </li>
+    );
   };
 
   return (
@@ -84,6 +141,7 @@ export default function WorkoutPage() {
           <div className="border-t pt-4">
             <h2 className="font-semibold text-lg mb-2">Add Exercise</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input placeholder="Category (e.g. Warm-up)" value={exercise.category} onChange={e => setExercise({ ...exercise, category: e.target.value })} />
               <Input placeholder="Exercise Name" value={exercise.name} onChange={e => setExercise({ ...exercise, name: e.target.value })} />
               <Input placeholder="Sets" value={exercise.sets} onChange={e => setExercise({ ...exercise, sets: e.target.value })} />
               <Input placeholder="Reps" value={exercise.reps} onChange={e => setExercise({ ...exercise, reps: e.target.value })} />
@@ -93,16 +151,17 @@ export default function WorkoutPage() {
             </div>
             <Button onClick={addExercise} className="mt-3">+ Add Exercise</Button>
 
-            {/* Show added exercises immediately */}
+            {/* Live preview with drag-and-drop */}
             {newWorkout.exercises.length > 0 && (
-              <ul className="list-disc list-inside mt-4 space-y-1">
-                {newWorkout.exercises.map((ex, idx) => (
-                  <li key={idx} className="text-sm">
-                    <span className="font-medium">{ex.name}</span> – {ex.sets} sets x {ex.reps} reps @ {ex.weight} ({ex.rest} rest)
-                    {ex.notes && ` – ${ex.notes}`}
-                  </li>
-                ))}
-              </ul>
+              <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext items={newWorkout.exercises.map(e => e.id)} strategy={verticalListSortingStrategy}>
+                  <ul className="mt-4 space-y-2">
+                    {newWorkout.exercises.map(ex => (
+                      <SortableExercise key={ex.id} ex={ex} />
+                    ))}
+                  </ul>
+                </SortableContext>
+              </DndContext>
             )}
           </div>
 
@@ -140,4 +199,5 @@ export default function WorkoutPage() {
     </div>
   );
 }
+
 
