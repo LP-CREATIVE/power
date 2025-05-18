@@ -8,10 +8,16 @@ export default function RosterLayout({
 }) {
   return (
     <>
-      <TopNav title="Ticket" />
-      <main>
-        <Container>{children}</Container>
-      </main>
-    </>
+    <TopNav
+        title={
+          <Image
+            src="/powerlogo.avif"
+            alt="Power Logo"
+            width={180}
+            height={180}
+            className="object-contain"
+          />
+        }
+      />
   );
 }
