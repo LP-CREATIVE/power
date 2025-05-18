@@ -26,16 +26,6 @@ export default function AttendancePage() {
     setAttendance(prev => ({ ...prev, [athlete]: !prev[athlete] }));
   };
 
-  const handleSave = () => {
-    const present = mockAthletes.filter(name => attendance[name]);
-    const absent = mockAthletes.filter(name => !attendance[name]);
-    console.log("✅ Present:", present);
-    console.log("❌ Absent:", absent);
-    if (autoNotify) {
-      console.log("📬 Sending notifications to absentees:", absent);
-    }
-    alert("Attendance saved!");
-  };
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
