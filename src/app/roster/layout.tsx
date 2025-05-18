@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Container from "@/components/container";
 import { TopNav } from "@/components/nav";
-import Image from "next/image";
 
 export default function RosterLayout({
   children,
@@ -9,16 +9,20 @@ export default function RosterLayout({
 }) {
   return (
     <>
-    <TopNav
+      <TopNav
         title={
           <Image
             src="/powerlogo.avif"
             alt="Power Logo"
-            width={180}
-            height={180}
+            width={100}
+            height={40}
             className="object-contain"
           />
         }
       />
+      <main>
+        <Container>{children}</Container>
+      </main>
+    </>
   );
 }
