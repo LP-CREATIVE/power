@@ -61,7 +61,6 @@ const roster = [
 ];
 
 type Player = typeof roster[number];
-
 type SortKey = keyof Player;
 
 export default function RosterPage() {
@@ -89,6 +88,11 @@ export default function RosterPage() {
     }
   };
 
+  const getSortIcon = (key: SortKey) => {
+    if (key !== sortKey) return "";
+    return ascending ? "▲" : "▼";
+  };
+
   return (
     <Container className="p-6">
       <h1 className="text-2xl font-bold mb-4">Team Roster</h1>
@@ -105,10 +109,10 @@ export default function RosterPage() {
         <table className="min-w-full table-auto border border-border bg-card text-sm text-left">
           <thead className="bg-muted text-muted-foreground uppercase tracking-wider">
             <tr>
-              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("number")}>#</th>
-              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("name")}>Name</th>
-              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("position")}>Position</th>
-              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("grade")}>Grade</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("number")}># {getSortIcon("number")}</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("name")}>Name {getSortIcon("name")}</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("position")}>Position {getSortIcon("position")}</th>
+              <th className="px-4 py-3 cursor-pointer" onClick={() => handleSort("grade")}>Grade {getSortIcon("grade")}</th>
             </tr>
           </thead>
           <tbody>
@@ -137,4 +141,5 @@ export default function RosterPage() {
     </Container>
   );
 }
+
 
