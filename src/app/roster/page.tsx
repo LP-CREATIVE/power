@@ -60,9 +60,13 @@ const roster = [
   { number: 88, name: "Zachary Cook", position: "WR, DB", grade: "FR" },
 ];
 
+type Player = typeof roster[number];
+
+type SortKey = keyof Player;
+
 export default function RosterPage() {
   const [search, setSearch] = useState("");
-  const [sortKey, setSortKey] = useState("number");
+  const [sortKey, setSortKey] = useState<SortKey>("number");
   const [ascending, setAscending] = useState(true);
 
   const filtered = roster
@@ -77,7 +81,7 @@ export default function RosterPage() {
         : bVal.localeCompare(aVal, undefined, { numeric: true });
     });
 
-  const handleSort = (key) => {
+  const handleSort = (key: SortKey) => {
     if (key === sortKey) setAscending(!ascending);
     else {
       setSortKey(key);
