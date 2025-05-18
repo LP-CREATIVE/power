@@ -1,7 +1,7 @@
 import Container from "@/components/container";
 import { TopNav } from "@/components/nav";
 
-export default function TicketLayout({
+export default function RosterLayout({
   children,
 }: {
   children: React.ReactNode;
