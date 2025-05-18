@@ -12,14 +12,15 @@ export default function SideNav() {
 
   return (
     <>
-      <button
-        className={cn(
-          "fixed left-0 top-12 z-50 rounded-r-md bg-slate-200 px-2 py-1.5 text-primary-foreground shadow-md hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 tablet:hidden",
-          "transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-44" : "translate-x-0",
-        )}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+     <button
+  className={cn(
+    "fixed left-0 top-12 z-50 rounded-r-md bg-red-600 px-2 py-1.5 text-white shadow-md hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800",
+    "transition-transform duration-300 ease-in-out",
+    isOpen ? "translate-x-44" : "translate-x-0",
+  )}
+  onClick={() => setIsOpen(!isOpen)}
+>
+
         {isOpen ? (
           <ArrowLeftToLine size={16} />
         ) : (
