@@ -15,7 +15,7 @@ export default function User() {
           />
           <div className="flex flex-col">
             <span className="text-sm font-medium">Lucas Phillips</span>
-            <span className="text-xs text-muted-foreground">Quarterback</span>
+            <span className="text-xs text-muted-foreground">Head Coach</span>
           </div>
         </div>
         <ChevronDown size={16} />
