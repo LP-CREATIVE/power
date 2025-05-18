@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function VisActor() {
   return (
     <Link
-      href="https://power-pink.vercel.app/"
+      href="https://powerband.app/"
       target="_blank"
       className="relative my-2 flex flex-col items-center justify-center gap-y-2 px-4 py-4"
     >
