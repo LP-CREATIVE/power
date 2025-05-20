@@ -1,11 +1,12 @@
 const roster = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
-  // Add the rest of your players here
+  // Add more players as needed
 ];
 
-export default function Page({ params }: { params: { number: string } }) {
-  const player = roster.find(p => p.number === Number(params.number));
+export default function Page({ params }: any) {
+  const number = parseInt(params.number, 10);
+  const player = roster.find(p => p.number === number);
 
   if (!player) {
     return (
@@ -41,4 +42,3 @@ export default function Page({ params }: { params: { number: string } }) {
     </div>
   );
 }
-
