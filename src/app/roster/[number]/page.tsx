@@ -5,7 +5,7 @@ const roster = [
 ];
 
 export default async function Page({ params }: { params: { number: string } }) {
-  const player = roster.find(p => p.number.toString() === params.number);
+  const player = roster.find(p => p.number === Number(params.number)); // ✅ safer match
 
   if (!player) {
     return (
@@ -41,3 +41,4 @@ export default async function Page({ params }: { params: { number: string } }) {
     </div>
   );
 }
+
