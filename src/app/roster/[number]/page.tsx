@@ -1,11 +1,11 @@
 const roster = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
-  // Add more players here
+  // Add the rest of your players here
 ];
 
-export default async function Page({ params }: { params: { number: string } }) {
-  const player = roster.find(p => p.number === Number(params.number)); // ✅ safer match
+export default function Page({ params }: { params: { number: string } }) {
+  const player = roster.find(p => p.number === Number(params.number));
 
   if (!player) {
     return (
