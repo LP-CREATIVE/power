@@ -1,18 +1,25 @@
-interface Player {
-  number: number;
-  name: string;
-  position: string;
-  grade: string;
+import { type Metadata } from "next";
+
+interface PageProps {
+  params: {
+    number: string;
+  };
 }
 
-const roster: Player[] = [
+const roster = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
-  // ... add the rest of your players here
+  // ...rest of your players
 ];
 
-// ✅ MAKE THIS ASYNC — this solves the error
-export default async function PlayerProfilePage({ params }: { params: { number: string } }) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const player = roster.find(p => p.number.toString() === params.number);
+  return {
+    title: player ? `${player.name} | Player Profile` : "Player Not Found",
+  };
+}
+
+export default async function PlayerProfilePage({ params }: PageProps) {
   const player = roster.find(p => p.number.toString() === params.number);
 
   if (!player) {
@@ -49,4 +56,3 @@ export default async function PlayerProfilePage({ params }: { params: { number: 
     </div>
   );
 }
-
