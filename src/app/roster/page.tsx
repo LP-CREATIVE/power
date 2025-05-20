@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Container from "@/components/container";
 
 const roster = [
@@ -121,10 +122,12 @@ export default function RosterPage() {
                 key={player.number}
                 className="border-t border-border hover:bg-muted transition"
               >
-                <td className="px-4 py-2 font-semibold text-primary">
-                  {player.number}
+                <td className="px-4 py-2 font-semibold text-primary">{player.number}</td>
+                <td className="px-4 py-2">
+                  <Link href={`/roster/${player.number}`} className="text-blue-600 hover:underline">
+                    {player.name}
+                  </Link>
                 </td>
-                <td className="px-4 py-2">{player.name}</td>
                 <td className="px-4 py-2">{player.position}</td>
                 <td className="px-4 py-2">{player.grade}</td>
               </tr>
@@ -141,5 +144,4 @@ export default function RosterPage() {
     </Container>
   );
 }
-
 
