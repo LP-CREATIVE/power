@@ -1,15 +1,27 @@
-import { notFound } from "next/navigation";
+interface Player {
+  number: number;
+  name: string;
+  position: string;
+  grade: string;
+}
 
-const roster = [
+const roster: Player[] = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
-  // You can paste the full list here or import it later
+  // ... add the rest of your players here
 ];
 
-export default function PlayerProfilePage({ params }: { params: { number: string } }) {
-  const player = roster.find((p) => p.number.toString() === params.number);
+// ✅ MAKE THIS ASYNC — this solves the error
+export default async function PlayerProfilePage({ params }: { params: { number: string } }) {
+  const player = roster.find(p => p.number.toString() === params.number);
 
-  if (!player) return notFound();
+  if (!player) {
+    return (
+      <div className="p-6">
+        <h1 className="text-2xl font-bold">Player not found</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
@@ -37,3 +49,4 @@ export default function PlayerProfilePage({ params }: { params: { number: string
     </div>
   );
 }
+
