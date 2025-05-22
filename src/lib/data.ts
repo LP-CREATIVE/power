@@ -1,20 +1,15 @@
 // src/lib/data.ts
-// It's a good practice to keep shared data and types in a separate directory like 'lib' or 'utils' or 'data'.
-
-// Define an interface for the player data
 export interface Player {
   id: number;
   name: string;
-  position: string; // This will store the combined position string e.g., "WR, DB"
+  position: string;
   number: number;
   height: string;
   weight: number;
   class: string;
-  imageUrl?: string; // Optional image URL
-  // Removed hometown as requested
+  imageUrl?: string; // Still here, but not used for display in roster/player pages
 }
 
-// Helper function to map grade to class
 const mapGradeToClass = (grade: string): string => {
   switch (grade) {
     case 'FR': return 'Freshman';
@@ -25,7 +20,6 @@ const mapGradeToClass = (grade: string): string => {
   }
 };
 
-// Helper function to get approximate measurables based on primary position
 const getPlayerMeasurables = (position: string): { height: string; weight: number } => {
   const primaryPosition = position.split(',')[0].trim().toUpperCase();
   // Approximate measurables for high school players
@@ -49,8 +43,7 @@ const getPlayerMeasurables = (position: string): { height: string; weight: numbe
   }
 };
 
-
-// New player data based on your list
+// Your original roster data structure
 const newRosterData = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
@@ -111,6 +104,7 @@ const newRosterData = [
 // Transformed player data
 export const playerData: Player[] = newRosterData.map((player, index) => {
   const measurables = getPlayerMeasurables(player.position);
+  // imageUrl is still generated here but might not be used for display if images are removed from pages
   const nameForImage = player.name.split(" ").map(n => n[0]).join("");
   return {
     id: index + 1, // Assign a simple incremental ID
@@ -120,9 +114,24 @@ export const playerData: Player[] = newRosterData.map((player, index) => {
     class: mapGradeToClass(player.grade),
     height: measurables.height,
     weight: measurables.weight,
-    imageUrl: `https://placehold.co/64x64/374151/E5E7EB?text=${nameForImage}`, // Placeholder image with initials
+    imageUrl: `https://placehold.co/64x64/374151/E5E7EB?text=${nameForImage}`, 
   };
 });
+
+// Helper function to get a player by ID
+export const getPlayerById = (id: number): Player | undefined => {
+  // Ensure playerData is an array before trying to use .find()
+  if (!Array.isArray(playerData)) {
+    console.error("Error: playerData is not available or not an array.");
+    return undefined;
+  }
+  // Check if the provided id is a number (not NaN)
+  if (isNaN(id)) {
+    console.error(`Error: Invalid player ID received (NaN). Original ID was likely not a number.`);
+    return undefined;
+  }
+  return playerData.find(player => player.id === id);
+};
 
 // Helper function to get a player by ID
 export const getPlayerById = (id: number): Player | undefined => {
