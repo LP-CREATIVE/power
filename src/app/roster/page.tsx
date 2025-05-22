@@ -15,7 +15,6 @@ const RosterPage = () => {
           <table className="min-w-full bg-gray-800">
             <thead className="bg-gray-700">
               <tr>
-                {/* Image column header removed */}
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Position</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Number</th>
@@ -27,7 +26,6 @@ const RosterPage = () => {
             <tbody className="divide-y divide-gray-700">
               {playerData.map((player: Player) => (
                 <tr key={player.id} className="hover:bg-gray-700 transition-colors duration-150">
-                  {/* Image cell removed */}
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link href={`/roster/${player.id}`} className="text-sm font-medium text-yellow-400 hover:text-yellow-300 hover:underline">
                         {player.name}
