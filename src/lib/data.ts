@@ -7,7 +7,7 @@ export interface Player {
   height: string;
   weight: number;
   class: string;
-  imageUrl?: string; // Still here, but not used for display in roster/player pages
+  imageUrl?: string; 
 }
 
 const mapGradeToClass = (grade: string): string => {
@@ -22,28 +22,26 @@ const mapGradeToClass = (grade: string): string => {
 
 const getPlayerMeasurables = (position: string): { height: string; weight: number } => {
   const primaryPosition = position.split(',')[0].trim().toUpperCase();
-  // Approximate measurables for high school players
   switch (primaryPosition) {
     case 'QB':
-      return { height: `6'${Math.floor(Math.random() * 3) + 0}"`, weight: Math.floor(Math.random() * 31) + 170 }; // 6'0"-6'2", 170-200 lbs
+      return { height: `6'${Math.floor(Math.random() * 3) + 0}"`, weight: Math.floor(Math.random() * 31) + 170 };
     case 'WR':
-      return { height: `5'${Math.floor(Math.random() * 4) + 9}"`, weight: Math.floor(Math.random() * 31) + 160 }; // 5'9"-6'0", 160-190 lbs
+      return { height: `5'${Math.floor(Math.random() * 4) + 9}"`, weight: Math.floor(Math.random() * 31) + 160 };
     case 'DB':
-      return { height: `5'${Math.floor(Math.random() * 4) + 9}"`, weight: Math.floor(Math.random() * 31) + 160 }; // 5'9"-6'0", 160-190 lbs
+      return { height: `5'${Math.floor(Math.random() * 4) + 9}"`, weight: Math.floor(Math.random() * 31) + 160 };
     case 'RB':
-      return { height: `5'${Math.floor(Math.random() * 3) + 8}"`, weight: Math.floor(Math.random() * 41) + 170 }; // 5'8"-5'10", 170-210 lbs
+      return { height: `5'${Math.floor(Math.random() * 3) + 8}"`, weight: Math.floor(Math.random() * 41) + 170 };
     case 'LB':
-      return { height: `5'${Math.floor(Math.random() * 3) + 10}"`, weight: Math.floor(Math.random() * 41) + 180 }; // 5'10"-6'0", 180-220 lbs
+      return { height: `5'${Math.floor(Math.random() * 3) + 10}"`, weight: Math.floor(Math.random() * 41) + 180 };
     case 'OL':
-      return { height: `6'${Math.floor(Math.random() * 4) + 1}"`, weight: Math.floor(Math.random() * 51) + 230 }; // 6'1"-6'4", 230-280 lbs
+      return { height: `6'${Math.floor(Math.random() * 4) + 1}"`, weight: Math.floor(Math.random() * 51) + 230 };
     case 'DL':
-      return { height: `6'${Math.floor(Math.random() * 4) + 0}"`, weight: Math.floor(Math.random() * 51) + 220 }; // 6'0"-6'3", 220-270 lbs
+      return { height: `6'${Math.floor(Math.random() * 4) + 0}"`, weight: Math.floor(Math.random() * 51) + 220 };
     default:
-      return { height: `5'10"`, weight: 175 }; // Default fallback
+      return { height: `5'10"`, weight: 175 };
   }
 };
 
-// Your original roster data structure
 const newRosterData = [
   { number: 1, name: "Ryon Lyons", position: "WR, DB", grade: "FR" },
   { number: 2, name: "Jordan Parker", position: "QB, DB", grade: "JR" },
@@ -101,7 +99,6 @@ const newRosterData = [
   { number: 88, name: "Zachary Cook", position: "WR, DB", grade: "FR" },
 ];
 
-// Transformed player data
 export const playerData: Player[] = newRosterData.map((player, index) => {
   const measurables = getPlayerMeasurables(player.position);
   const nameForImage = player.name.split(" ").map(n => n[0]).join("");
@@ -117,14 +114,13 @@ export const playerData: Player[] = newRosterData.map((player, index) => {
   };
 });
 
-// Helper function to get a player by ID
 export const getPlayerById = (id: number): Player | undefined => {
   if (!Array.isArray(playerData)) {
-    // console.error("Error: playerData is not available or not an array."); // ESLint: no-console
+    // console.error("Error: playerData is not available or not an array."); // Removed
     return undefined;
   }
   if (isNaN(id)) {
-    // console.error(`Error: Invalid player ID received (NaN). Original ID was likely not a number.`); // ESLint: no-console
+    // console.error(`Error: Invalid player ID received (NaN). Original ID was likely not a number.`); // Removed
     return undefined;
   }
   return playerData.find(player => player.id === id);
