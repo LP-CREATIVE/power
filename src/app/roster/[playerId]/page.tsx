@@ -3,7 +3,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { getPlayerById } from '@/lib/data';
-import type { Player } from '@/lib/data'; // Use type-only import for Player
 
 // Props for the page component, params will contain playerId
 interface PlayerPageProps {
@@ -15,7 +14,6 @@ interface PlayerPageProps {
 const PlayerPerformancePage = ({ params }: PlayerPageProps) => {
   // Validate playerId parameter from params
   if (!params || typeof params.playerId !== 'string') {
-    console.error("Error: Invalid params or playerId not found in params.", params);
     notFound(); // Or handle as a bad request, e.g., redirect or show specific error
     return null;
   }
@@ -24,7 +22,6 @@ const PlayerPerformancePage = ({ params }: PlayerPageProps) => {
 
   // Check if parsing was successful (parseInt returns NaN for invalid strings)
   if (isNaN(playerIdNum)) {
-    console.error(`Error: Could not parse playerId "${params.playerId}" to a valid number.`);
     notFound(); // Treat as not found if ID is not a valid number
     return null;
   }
@@ -34,7 +31,6 @@ const PlayerPerformancePage = ({ params }: PlayerPageProps) => {
   if (!player) {
     // getPlayerById might have logged an error if ID was NaN or playerData was corrupt
     // If player is simply not found for a valid ID, notFound() is appropriate.
-    console.log(`Player with ID ${playerIdNum} not found. This might be expected if the ID doesn't exist.`);
     notFound();
     return null;
   }
@@ -84,7 +80,7 @@ const PlayerPerformancePage = ({ params }: PlayerPageProps) => {
               ))}
             </div>
             <p className="mt-8 text-center text-gray-500 italic">
-              Performance data is currently a placeholder. You'll need to integrate your actual data source for real statistics.
+              Performance data is currently a placeholder. You&apos;ll need to integrate your actual data source for real statistics.
             </p>
           </div>
         </div>

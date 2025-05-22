@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { playerData, Player } from '@/lib/data'; 
+import { playerData } from '@/lib/data';
+import type { Player } from '@/lib/data'; 
 // PlayerImage component import is removed
 
 // Component to display the roster page
