@@ -119,6 +119,7 @@ export const playerData: Player[] = newRosterData.map((player, index) => {
 });
 
 // Helper function to get a player by ID
+// This is the single, corrected definition
 export const getPlayerById = (id: number): Player | undefined => {
   // Ensure playerData is an array before trying to use .find()
   if (!Array.isArray(playerData)) {
@@ -133,7 +134,4 @@ export const getPlayerById = (id: number): Player | undefined => {
   return playerData.find(player => player.id === id);
 };
 
-// Helper function to get a player by ID
-export const getPlayerById = (id: number): Player | undefined => {
-  return playerData.find(player => player.id === id);
-};
+// The duplicate definition that was here has been removed.
