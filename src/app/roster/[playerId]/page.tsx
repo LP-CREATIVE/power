@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { notFound } from 'next/navigation'; // To handle player not found
-import Header from '../../../components/Header'; // Path from src/app/roster/[playerId]/page.tsx to src/components/
-import Footer from '../../../components/Footer'; // Path from src/app/roster/[playerId]/page.tsx to src/components/
-import { getPlayerById, Player } from '../../../lib/data'; // Path from src/app/roster/[playerId]/page.tsx to src/lib/
+import Header from '@/components/Header'; // Updated path using alias
+import Footer from '@/components/Footer'; // Updated path using alias
+import { getPlayerById, Player } from '@/lib/data'; // Updated path using alias
 
 // Props for the page component, params will contain playerId
 interface PlayerPageProps {
@@ -17,7 +17,7 @@ interface PlayerPageProps {
 
 // Optional: Generate static paths at build time if you know all player IDs
 // This can improve performance for static site generation (SSG)
-// import { playerData } from '../../../lib/data'; // Import playerData for generateStaticParams
+// import { playerData } from '@/lib/data'; // If you uncomment this, use alias too
 // export async function generateStaticParams() {
 //   return playerData.map((player) => ({
 //     playerId: player.id.toString(),
