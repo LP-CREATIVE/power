@@ -104,10 +104,9 @@ const newRosterData = [
 // Transformed player data
 export const playerData: Player[] = newRosterData.map((player, index) => {
   const measurables = getPlayerMeasurables(player.position);
-  // imageUrl is still generated here but might not be used for display if images are removed from pages
   const nameForImage = player.name.split(" ").map(n => n[0]).join("");
   return {
-    id: index + 1, // Assign a simple incremental ID
+    id: index + 1, 
     name: player.name,
     position: player.position,
     number: player.number,
@@ -119,19 +118,14 @@ export const playerData: Player[] = newRosterData.map((player, index) => {
 });
 
 // Helper function to get a player by ID
-// This is the single, corrected definition
 export const getPlayerById = (id: number): Player | undefined => {
-  // Ensure playerData is an array before trying to use .find()
   if (!Array.isArray(playerData)) {
-    console.error("Error: playerData is not available or not an array.");
+    // console.error("Error: playerData is not available or not an array."); // ESLint: no-console
     return undefined;
   }
-  // Check if the provided id is a number (not NaN)
   if (isNaN(id)) {
-    console.error(`Error: Invalid player ID received (NaN). Original ID was likely not a number.`);
+    // console.error(`Error: Invalid player ID received (NaN). Original ID was likely not a number.`); // ESLint: no-console
     return undefined;
   }
   return playerData.find(player => player.id === id);
 };
-
-// The duplicate definition that was here has been removed.
