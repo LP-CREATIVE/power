@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const promptContent = process.env.POWERCOACHPROMPT;
-  const apiKey = process.env.OPEN_AI_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
 
   if (!promptContent || !apiKey) {
     return NextResponse.json(
