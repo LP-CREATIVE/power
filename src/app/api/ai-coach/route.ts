@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const promptContent = process.env.POWERCOACHPROMPT;
+  const promptContent = process.env.powercoachprompt;
   const apiKey = process.env.chatgptkey;
 
   if (!promptContent || !apiKey) {
     return NextResponse.json(
-      { error: 'Missing environment configuration (POWERCOACHPROMPT or chatgptkey)' },
+      { error: 'Missing environment configuration (powercoachprompt or chatgptkey)' },
       { status: 500 }
     );
   }
