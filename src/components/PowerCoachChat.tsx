@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type Message = {
   sender: 'user' | 'coach';
   text: string;
 };
+
+const STORAGE_KEY = 'coachPChatLog';
 
 export default function PowerCoachChat() {
   const [message, setMessage] = useState('');
@@ -13,13 +15,24 @@ export default function PowerCoachChat() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // 🔁 Load chat from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      setChatLog(JSON.parse(saved));
+    }
+  }, []);
+
+  // 💾 Save chat to localStorage every time it changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(chatLog));
+  }, [chatLog]);
+
   const sendMessage = async () => {
     if (!message.trim()) return;
 
     setLoading(true);
     setError('');
-
-    // Add user's message to chat
     setChatLog(prev => [...prev, { sender: 'user', text: message }]);
 
     try {
@@ -46,6 +59,7 @@ export default function PowerCoachChat() {
 
   const clearChat = () => {
     setChatLog([]);
+    localStorage.removeItem(STORAGE_KEY);
   };
 
   return (
