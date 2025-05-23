@@ -40,7 +40,7 @@ export const navigations: Navigation[] = [
   },
   {
     icon: Bot,
-    name: "Coach P",
+    name: "Ask Coach P",
     href: "/coachP",
   },
 ];
