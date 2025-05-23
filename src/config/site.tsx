@@ -41,6 +41,6 @@ export const navigations: Navigation[] = [
   {
     icon: Bot,
     name: "Ask Coach P",
-    href: "/coachP",
+    href: "/coachp",
   },
 ];
