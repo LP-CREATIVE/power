@@ -38,4 +38,9 @@ export const navigations: Navigation[] = [
     name: "Messages",
     href: "/messages",
   },
+  {
+    icon: bot,
+    name: "Coach P",
+    href: "/coachP",
+  },
 ];
