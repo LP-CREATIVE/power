@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const promptContent = process.env.powercoachprompt;
-  const apiKey = process.env.chatgptkey;
+  const promptContent = process.env.POWERCOACHPROMPT;
+  const apiKey = process.env.OPEN_AI_KEY;
 
   if (!promptContent || !apiKey) {
     return NextResponse.json(
