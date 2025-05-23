@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   if (!promptContent || !apiKey) {
     return NextResponse.json(
-      { error: 'Missing environment configuration (POWERCOACHPROMPT or OPENAI_API_KEY)' },
+      { error: 'Missing environment configuration (POWERCOACHPROMPT or chatgptkey)' },
       { status: 500 }
     );
   }
