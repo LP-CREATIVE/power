@@ -1,43 +1,49 @@
-// src/components/ui/BleSpeedMonitor.tsx
-import React, { useState } from 'react';
+'use client'
 
-const SERVICE_UUID = '1101';
-const CHAR_UUID    = '2101';
+import { useState } from 'react'
+
+const SERVICE_UUID = '1101'
+const CHAR_UUID    = '2101'
 
 export default function BleSpeedMonitor() {
-  const [speed, setSpeed] = useState<string| null>(null);
-  const [connected, setConnected] = useState(false);
-  const [device, setDevice] = useState<BluetoothDevice | null>(null);
+  const [speed, setSpeed]       = useState<string | null>(null)
+  const [connected, setConnected] = useState(false)
+  const [device, setDevice]       = useState<BluetoothDevice | null>(null)
 
   async function connectBLE() {
     try {
       const dev = await navigator.bluetooth.requestDevice({
-        filters: [{ services: [SERVICE_UUID] }]
-      });
-      setDevice(dev);
-      const server  = await dev.gatt!.connect();
-      const service = await server.getPrimaryService(SERVICE_UUID);
-      const char    = await service.getCharacteristic(CHAR_UUID);
-      await char.startNotifications();
-      char.addEventListener('characteristicvaluechanged', onSpeedChanged);
-      setConnected(true);
-    } catch (e: any) {
-      console.error(e);
-      alert('BLE error: ' + e.message);
+        filters: [{ services: [SERVICE_UUID] }],
+      })
+      setDevice(dev)
+
+      const server  = await dev.gatt!.connect()
+      const service = await server.getPrimaryService(SERVICE_UUID)
+      const char    = await service.getCharacteristic(CHAR_UUID)
+
+      await char.startNotifications()
+      char.addEventListener('characteristicvaluechanged', onSpeedChanged)
+
+      setConnected(true)
+    } catch (err: unknown) {
+      // eslint-disable-next-line no-console
+      console.error('BLE connection failed', err)
+      alert('BLE error: ' + (err instanceof Error ? err.message : String(err)))
     }
   }
 
-  function onSpeedChanged(e: Event) {
-    const val = (e.target as BluetoothRemoteGATTCharacteristic).value!;
-    const str = new TextDecoder().decode(val);
-    const n   = parseFloat(str);
-    if (!isNaN(n)) setSpeed(n.toFixed(1));
+  function onSpeedChanged(event: Event) {
+    const char = event.target as BluetoothRemoteGATTCharacteristic
+    const value = char.value!
+    const text = new TextDecoder().decode(value)
+    const n = parseFloat(text)
+    if (!Number.isNaN(n)) setSpeed(n.toFixed(1))
   }
 
   function disconnect() {
-    if (device && device.gatt?.connected) device.gatt.disconnect();
-    setConnected(false);
-    setSpeed(null);
+    if (device?.gatt?.connected) device.gatt.disconnect()
+    setConnected(false)
+    setSpeed(null)
   }
 
   return (
@@ -56,5 +62,6 @@ export default function BleSpeedMonitor() {
         </button>
       )}
     </div>
-  );
+  )
 }
+
