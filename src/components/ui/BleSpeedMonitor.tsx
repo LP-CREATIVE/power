@@ -2,6 +2,13 @@
 
 import { useState } from 'react';
 
+// Extend Navigator to include bluetooth for Web Bluetooth API
+declare global {
+  interface Navigator {
+    bluetooth: any;
+  }
+}
+
 const SERVICE_UUID = '1101';
 const CHAR_UUID    = '2101';
 
@@ -13,15 +20,13 @@ export default function BleSpeedMonitor() {
 
   const connectBLE = async () => {
     try {
-      // Cast navigator to any to access bluetooth
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const nav: any = navigator;
-      const dev = await nav.bluetooth.requestDevice({
+      // Use Web Bluetooth via navigator.bluetooth
+      const dev = await navigator.bluetooth.requestDevice({
         filters: [{ services: [SERVICE_UUID] }]
       });
       setDevice(dev);
 
-      const server  = await dev.gatt!.connect();
+      const server  = await dev.gatt.connect();
       const service = await server.getPrimaryService(SERVICE_UUID);
       const char    = await service.getCharacteristic(CHAR_UUID);
 
