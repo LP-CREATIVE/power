@@ -13,7 +13,10 @@ export default function BleSpeedMonitor() {
 
   const connectBLE = async () => {
     try {
-      const dev = await navigator.bluetooth.requestDevice({
+      // Cast navigator to any to access bluetooth
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const nav: any = navigator;
+      const dev = await nav.bluetooth.requestDevice({
         filters: [{ services: [SERVICE_UUID] }]
       });
       setDevice(dev);
@@ -34,10 +37,10 @@ export default function BleSpeedMonitor() {
   };
 
   function onSpeedChanged(event: Event) {
-    const char   = event.target as BluetoothRemoteGATTCharacteristic;
-    const value  = char.value!;
-    const text   = new TextDecoder().decode(value);
-    const n      = parseFloat(text);
+    const char = event.target as BluetoothRemoteGATTCharacteristic;
+    const value = char.value!;
+    const text = new TextDecoder().decode(value);
+    const n = parseFloat(text);
     if (!Number.isNaN(n)) setSpeed(n.toFixed(1));
   }
 
