@@ -5,7 +5,6 @@ import {
   Metrics,
   TicketByChannels,
 } from "@/components/chart-blocks";
-import BleSpeedMonitor from '@/components/ui/BleSpeedMonitor';
 import Container from "@/components/container";
 
 export default function Home() {
