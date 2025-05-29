@@ -5,6 +5,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": [                    // ← add this line
+      "web-bluetooth"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
