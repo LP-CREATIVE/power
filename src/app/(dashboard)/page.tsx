@@ -1,3 +1,4 @@
+// src/app/(dashboard)/page.tsx
 import {
   AverageTicketsCreated,
   Conversions,
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <div>
       <Metrics />
+
       <div className="grid grid-cols-1 divide-y border-b border-border laptop:grid-cols-3 laptop:divide-x laptop:divide-y-0 laptop:divide-border">
         <Container className="py-4 laptop:col-span-2">
           <AverageTicketsCreated />
@@ -19,10 +21,6 @@ export default function Home() {
           <Conversions />
         </Container>
       </div>
-      <section className="my-8">
-  <h2 className="text-2xl font-semibold mb-2">Real-Time Speed</h2>
-  <BleSpeedMonitor />
-</section>
 
       <div className="grid grid-cols-1 divide-y border-b border-border laptop:grid-cols-2 laptop:divide-x laptop:divide-y-0 laptop:divide-border">
         <Container className="py-4 laptop:col-span-1">
