@@ -13,6 +13,7 @@
     "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/supabase-js": "^2.49.8",
+    "@types/web-bluetooth": "^0.0.21",
     "@visactor/react-vchart": "^1.12.10",
     "@visactor/vchart": "^1.12.10",
     "class-variance-authority": "^0.7.0",
