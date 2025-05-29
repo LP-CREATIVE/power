@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // src/app/api/imu/route.ts
 import { NextResponse } from 'next/server'
 import { createClient }   from '@supabase/supabase-js'
