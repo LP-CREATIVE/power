@@ -25,8 +25,8 @@ const CHAR_UUID    = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
     try {
       setStatus('Requesting device…')
       const device = await navigator.bluetooth.requestDevice({
-        filters: [{ name: 'NanoIMU' }],
-        optionalServices: [SERVICE_UUID]
+        filters: [{ name: 'NanoIMU', services: [SERVICE_UUID] }],
+    optionalServices: [SERVICE_UUID]
       })
 
       setStatus('Connecting…')
