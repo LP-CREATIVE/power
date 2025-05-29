@@ -1,6 +1,7 @@
+/// <reference types="web-bluetooth" />
 // src/app/stream/page.tsx
 'use client'
-/// <reference types="web-bluetooth" />
+
 
 import React, { useState, useRef } from 'react'
 
