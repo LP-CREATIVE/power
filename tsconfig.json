@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
-    "types": [                    // ← add this line
+    "types": [
       "web-bluetooth"
     ],
     "allowJs": true,
