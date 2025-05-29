@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
         mx, my, mz,
         counter
       })
+      .select('id')  // ← request the inserted row’s id
 
     if (error) {
       console.error('Supabase insert error:', error)
