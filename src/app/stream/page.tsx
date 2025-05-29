@@ -1,6 +1,12 @@
 // src/app/stream/page.tsx
 'use client'
 
+/// <reference types="web-bluetooth" />
+
+import React from 'react'
+// …rest of your imports…
+
+
 import { useState, useRef } from 'react'
 
 export default function StreamPage() {
