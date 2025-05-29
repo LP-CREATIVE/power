@@ -9,8 +9,10 @@ export default function StreamPage() {
   const [status, setStatus] = useState('Idle')
   const logRef = useRef<HTMLDivElement>(null)
 
-  const SERVICE_UUID = '00001101-0000-1000-8000-00805f9b34fb'
-  const CHAR_UUID    = '00002101-0000-1000-8000-00805f9b34fb'
+ // NEW Nordic UART Service UUIDs
+const SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+const CHAR_UUID    = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+
   const DB_ENDPOINT  = '/api/imu'
 
   const appendLog = (msg: string) => {
