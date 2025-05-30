@@ -4,7 +4,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 
 export default function StreamPage() {
-  const [status, setStatus] = useState('Idle')
+  const [status, setStatus] => useState('Idle')
   const logRef = useRef<HTMLDivElement>(null)
   const [device, setDevice] = useState<BluetoothDevice | null>(null)
   const [characteristic, setCharacteristic] = useState<BluetoothRemoteGATTCharacteristic | null>(null)
@@ -27,9 +27,16 @@ export default function StreamPage() {
   }
 
   async function startStream() {
+    // Feature detect Web Bluetooth
+    if (!navigator.bluetooth) {
+      setStatus('Web Bluetooth API not supported in this browser. Use Chrome (Desktop/Android) or Safari iOS 16.4+')
+      return
+    }
+
     try {
       setStatus('Requesting device…')
       const dev = await navigator.bluetooth.requestDevice({
+        // Show all BLE devices for broad discovery
         acceptAllDevices: true,
         optionalServices: [SERVICE_UUID]
       })
@@ -55,7 +62,7 @@ export default function StreamPage() {
 
       setStatus(`Streaming from ${dev.name || dev.id}`)
     } catch (e: any) {
-      setStatus('Error: ' + e.message)
+      setStatus('Error: ' + (e.message || e))
     }
   }
 
@@ -86,6 +93,7 @@ export default function StreamPage() {
     }
   }
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (characteristic) {
