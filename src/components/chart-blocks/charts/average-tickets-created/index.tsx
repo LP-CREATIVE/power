@@ -11,7 +11,7 @@ import MetricCard from "./components/metric-card";
 
 const calMetricCardValue = (
   data: TicketMetric[],
-  type: "created" | "resolved",
+  type: "assigned" | "completed",
 ) => {
   const filteredData = data.filter((item) => item.type === type);
   return Math.round(
@@ -22,8 +22,8 @@ const calMetricCardValue = (
 
 export default function AverageTicketsCreated() {
   const ticketChartData = useAtomValue(ticketChartDataAtom);
-  const avgCreated = calMetricCardValue(ticketChartData, "created");
-  const avgResolved = calMetricCardValue(ticketChartData, "resolved");
+  const avgAssigned = calMetricCardValue(ticketChartData, "assigned");
+  const avgCompleted = calMetricCardValue(ticketChartData, "completed");
 
   return (
     <section className="flex h-full flex-col gap-2">
