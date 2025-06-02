@@ -28,7 +28,7 @@ export default function AverageTicketsCreated() {
   return (
     <section className="flex h-full flex-col gap-2">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <ChartTitle title="Average Tickets Created" icon={FilePlus2} />
+        <ChartTitle title="Average Reps Completed" icon={FilePlus2} />
         <DatePickerWithRange className="" />
       </div>
       <div className="flex flex-wrap">
