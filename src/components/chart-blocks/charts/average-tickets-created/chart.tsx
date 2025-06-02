@@ -44,7 +44,7 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
     },
     style: {
       cornerRadius: [12, 12, 12, 12],
-      zIndex: (datum) => datum.type === "resolved" ? 2 : 1,
+      zIndex: (datum) => datum.type === "completed" ? 2 : 1,
     },
   },
 });
