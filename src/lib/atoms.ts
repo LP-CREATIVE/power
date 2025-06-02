@@ -2,7 +2,7 @@ import { addDays, endOfDay, isWithinInterval, startOfDay } from "date-fns";
 import { atom } from "jotai";
 import type { DateRange } from "react-day-picker";
 import { averageRepsCompleted } from "@/data/average-reps-completed";
-import type { TicketMetric } from "@/types/types";
+import type { RepMetric } from "@/types/types";
 
 const defaultStartDate = new Date(2023, 11, 18);
 
