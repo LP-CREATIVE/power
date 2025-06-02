@@ -4,10 +4,10 @@ import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { VChart } from "@visactor/react-vchart";
 import type { IBarChartSpec } from "@visactor/vchart";
-import { ticketChartDataAtom } from "@/lib/atoms";
-import type { TicketMetric } from "@/types/types";
+import { RepChartDataAtom } from "@/lib/atoms";
+import type { RepMetric } from "@/types/types";
 
-const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
+const generateSpec = (data: RepMetric[]): IBarChartSpec => ({
   type: "bar",
   data: [
     {
@@ -51,8 +51,8 @@ const generateSpec = (data: TicketMetric[]): IBarChartSpec => ({
 
 
 export default function Chart() {
-  const ticketChartData = useAtomValue(ticketChartDataAtom);
-  const spec = generateSpec(ticketChartData);
+  const repChartData = useAtomValue(repChartDataAtom);
+  const spec = generateSpec(repChartData);
 
 return <VChart spec={spec} />;
 }
