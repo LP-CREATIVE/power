@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { averageTicketsCreated } from "@/data/average-tickets-created";
+import { averageRepsCompleted } from "@/data/average-reps-completed";
 import { dateRangeAtom } from "@/lib/atoms";
 import { cn } from "@/lib/utils";
 
@@ -19,20 +19,20 @@ export function DatePickerWithRange({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [dateRange, setDateRange] = useAtom(dateRangeAtom);
 
-  const firstAvailableDate = averageTicketsCreated.reduce(
+  const firstAvailableDate = averageRepsCompleted.reduce(
     (minDate, current) => {
       const currentDate = parseISO(current.date);
       return currentDate < minDate ? currentDate : minDate;
     },
-    parseISO(averageTicketsCreated[0].date),
+    parseISO(averageRepsCompleted[0].date),
   );
 
-  const lastAvailableDate = averageTicketsCreated.reduce(
+  const lastAvailableDate = averageRepsCompleted.reduce(
     (maxDate, current) => {
       const currentDate = parseISO(current.date);
       return currentDate > maxDate ? currentDate : maxDate;
     },
-    parseISO(averageTicketsCreated[averageTicketsCreated.length - 1].date),
+    parseISO(averageRepsCompleted[averageRepsCompleted.length - 1].date),
   );
 
   return (
