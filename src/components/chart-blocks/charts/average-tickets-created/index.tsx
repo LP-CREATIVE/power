@@ -28,13 +28,13 @@ export default function AverageTicketsCreated() {
   return (
     <section className="flex h-full flex-col gap-2">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <ChartTitle title="Average Reps Completed" icon={FilePlus2} />
+        <ChartTitle title="Average Completed Reps" icon={FilePlus2} />
         <DatePickerWithRange className="" />
       </div>
       <div className="flex flex-wrap">
         <div className="my-4 flex w-52 shrink-0 flex-col justify-center gap-6">
           <MetricCard
-            title="Total Needed Reps"
+            title="Total Assigned Reps"
             value={avgCreated}
             color="#000000"
           />
