@@ -21,7 +21,7 @@ const calMetricCardValue = (
 };
 
 export default function AverageRepsAssigned() {
-  const RepChartData = useAtomValue(repChartDataAtom);
+  const repChartData = useAtomValue(repChartDataAtom);
   const avgAssigned = calMetricCardValue(repChartData, "assigned");
   const avgCompleted = calMetricCardValue(repChartData, "completed");
 
