@@ -4,7 +4,7 @@ import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { VChart } from "@visactor/react-vchart";
 import type { IBarChartSpec } from "@visactor/vchart";
-import { RepChartDataAtom } from "@/lib/atoms";
+import { repChartDataAtom } from "@/lib/atoms";
 import type { RepMetric } from "@/types/types";
 
 const generateSpec = (data: RepMetric[]): IBarChartSpec => ({
