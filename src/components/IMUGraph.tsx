@@ -22,7 +22,7 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // 1) Fetch the latest IMU rows
+    // 1) Fetch initial IMU rows
     supabaseClient
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -54,7 +54,7 @@ export default function IMUGraph() {
         setChartData(flattened);
       });
 
-    // 2) Subscribe to new INSERTs using V2 Real-time API
+    // 2) Subscribe to new INSERTs via v2 Realtime
     const channel = supabaseClient
       .channel("imu_samples_channel")
       .on(
@@ -82,7 +82,7 @@ export default function IMUGraph() {
     };
   }, []);
 
-  // 3) Build VChart spec without explicitly setting legends
+  // 3) Build a v1‐style ILineChartSpec
   const spec: ILineChartSpec = {
     type: "line",
     data: [
@@ -103,9 +103,26 @@ export default function IMUGraph() {
       "hsl(280, 70%, 50%)", // gz
     ],
     padding: [40, 20, 20, 60],
-    tooltip: {
-      trigger: ["hover", "click"],
+
+    // v1‐style legend (singular, not "legends")
+    legend: {
+      visible: true,
+      orient: "horizontal",   // valid in v1
+      position: "middle",     // valid values: "start" | "middle" | "end"
     },
+
+    // v1‐style axes array
+    axes: [
+      {
+        orient: "bottom",      // x‐axis
+        title: { text: "Time (HH:MM:SS)", visible: true },
+      },
+      {
+        orient: "left",        // y‐axis
+        title: { text: "Sensor Value", visible: true },
+      },
+    ],
+
     line: {
       state: {
         hover: {
@@ -116,18 +133,6 @@ export default function IMUGraph() {
         smooth: true,
       },
     },
-    xAxis: {
-      title: {
-        visible: true,
-        text: "Time (HH:MM:SS)",
-      },
-    },
-    yAxis: {
-      title: {
-        visible: true,
-        text: "Sensor Value",
-      },
-    },
   };
 
   return (
@@ -136,4 +141,3 @@ export default function IMUGraph() {
     </div>
   );
 }
-
