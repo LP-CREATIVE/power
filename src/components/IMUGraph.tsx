@@ -20,7 +20,7 @@ export default function IMUGraph() {
   const [chartData, setChartData] = useState<Array<{ timestamp: string; axis: string; value: number }>>([]);
 
   useEffect(() => {
-    / supabaseClient
+     supabaseClient
       .from("imu_samples")
       .select<Pick<IMUSample, "timestamp" | "ax" | "ay" | "az" | "gx" | "gy" | "gz">>(
         "timestamp, ax, ay, az, gx, gy, gz"
