@@ -1,33 +1,12 @@
-// components/IMUGraph.tsx
+// src/components/IMUGraph.tsx
 "use client";
+
 import { useEffect, useState } from "react";
-import { supabaseClient } from "../lib/supabaseClient";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title as ChartTitle,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
+import { VChart } from "@visactor/react-vchart";
+import type { ILineChartSpec } from "@visactor/vchart";
+import { supabaseClient } from "@/lib/supabaseClient";
 
-// 1) Register the Chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  ChartTitle,
-  Tooltip,
-  Legend
-);
-
-// 2) (Optional) TypeScript interface to model your imu_samples rows
 type IMUSample = {
-  id: number;
   timestamp: string;
   ax: number;
   ay: number;
@@ -38,10 +17,10 @@ type IMUSample = {
 };
 
 export default function IMUGraph() {
-  const [samples, setSamples] = useState<IMUSample[]>([]);
+  const [chartData, setChartData] = useState<Array<{ timestamp: string; axis: string; value: number }>>([]);
 
   useEffect(() => {
-    // Fetch the latest 1000 rows from imu_samples
+    // 1) Fetch the latest IMU rows from Supabase
     supabaseClient
       .from<IMUSample>("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -50,16 +29,39 @@ export default function IMUGraph() {
       .then(({ data, error }) => {
         if (error) {
           console.error("Supabase fetch error:", error);
-        } else if (data) {
-          setSamples(data);
+          return;
         }
+        if (!data) return;
+
+        // 2) Flatten each row into six {timestamp, axis, value} objects
+        const flattened: Array<{ timestamp: string; axis: string; value: number }> = [];
+        data.forEach((row) => {
+          // Format the timestamp as "HH:MM:SS" (24h)
+          const ts = new Date(row.timestamp).toLocaleTimeString("en-US", { hour12: false });
+          flattened.push({ timestamp: ts, axis: "ax", value: row.ax });
+          flattened.push({ timestamp: ts, axis: "ay", value: row.ay });
+          flattened.push({ timestamp: ts, axis: "az", value: row.az });
+          flattened.push({ timestamp: ts, axis: "gx", value: row.gx });
+          flattened.push({ timestamp: ts, axis: "gy", value: row.gy });
+          flattened.push({ timestamp: ts, axis: "gz", value: row.gz });
+        });
+        setChartData(flattened);
       });
 
-    // Optional: listen for new INSERTs in real time
+    // 3) (Optional) Listen for new INSERTs in real time and append them
     const subscription = supabaseClient
       .from("imu_samples")
-      .on("INSERT", (payload) => {
-        setSamples((prev) => [...prev, payload.new as IMUSample]);
+      .on("INSERT", ({ new: newRow }: { new: IMUSample }) => {
+        const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", { hour12: false });
+        setChartData((prev) => [
+          ...prev,
+          { timestamp: ts, axis: "ax", value: newRow.ax },
+          { timestamp: ts, axis: "ay", value: newRow.ay },
+          { timestamp: ts, axis: "az", value: newRow.az },
+          { timestamp: ts, axis: "gx", value: newRow.gx },
+          { timestamp: ts, axis: "gy", value: newRow.gy },
+          { timestamp: ts, axis: "gz", value: newRow.gz },
+        ]);
       })
       .subscribe();
 
@@ -68,91 +70,71 @@ export default function IMUGraph() {
     };
   }, []);
 
-  // 3) Build Chart.js data
-  const labels = samples.map((s) =>
-    new Date(s.timestamp).toLocaleTimeString("en-US", { hour12: false })
-  );
-
-  const chartData = {
-    labels,
-    datasets: [
+  // 4) Construct a VChart line‐chart spec, using "axis" as the seriesField
+  const spec: ILineChartSpec = {
+    type: "line",
+    data: [
       {
-        label: "Accel X (g)",
-        data: samples.map((s) => s.ax),
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        tension: 0.2,
-      },
-      {
-        label: "Accel Y (g)",
-        data: samples.map((s) => s.ay),
-        borderColor: "rgb(54, 162, 235)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        tension: 0.2,
-      },
-      {
-        label: "Accel Z (g)",
-        data: samples.map((s) => s.az),
-        borderColor: "rgb(255, 206, 86)",
-        backgroundColor: "rgba(255, 206, 86, 0.2)",
-        tension: 0.2,
-      },
-      {
-        label: "Gyro X (°/s)",
-        data: samples.map((s) => s.gx),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        tension: 0.2,
-      },
-      {
-        label: "Gyro Y (°/s)",
-        data: samples.map((s) => s.gy),
-        borderColor: "rgb(153, 102, 255)",
-        backgroundColor: "rgba(153, 102, 255, 0.2)",
-        tension: 0.2,
-      },
-      {
-        label: "Gyro Z (°/s)",
-        data: samples.map((s) => s.gz),
-        borderColor: "rgb(255, 159, 64)",
-        backgroundColor: "rgba(255, 159, 64, 0.2)",
-        tension: 0.2,
+        id: "imuData",
+        values: chartData,
       },
     ],
-  };
-
-  const options = {
-    responsive: true,
-    interaction: {
-      mode: "index" as const,
-      intersect: false,
+    xField: "timestamp",
+    yField: "value",
+    seriesField: "axis",
+    // You can customize colors, legend, tooltips, etc. below:
+    color: [
+      "hsl(200, 70%, 40%)", // ax (e.g. blue)
+      "hsl(340, 70%, 40%)", // ay (e.g. pink)
+      "hsl( 60, 70%, 40%)", // az (e.g. yellow)
+      "hsl(  0, 70%, 50%)", // gx (e.g. red)
+      "hsl(120, 70%, 40%)", // gy (e.g. green)
+      "hsl(280, 70%, 50%)", // gz (e.g. purple)
+    ],
+    padding: [40, 20, 20, 60], // top, right, bottom, left
+    tooltip: {
+      trigger: ["hover", "click"],
     },
-    stacked: false,
-    plugins: {
+    legend: {
+      visible: true,
+      position: "top",
+      orient: "horizontal",
+    },
+    line: {
+      state: {
+        hover: {
+          lineWidth: 4,
+        },
+      },
+      style: {
+        smooth: true,
+      },
+    },
+    xAxis: {
       title: {
-        display: true,
-        text: "IMU Streams (Accel + Gyro) vs. Time",
+        visible: true,
+        text: "Time (HH:MM:SS)",
+      },
+      // if you want to avoid overlapping labels, you can rotate:
+      label: {
+        // rotate: -45,
+        // style: { textAlign: "end" },
       },
     },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Time (HH:MM:SS)",
-        },
+    yAxis: {
+      title: {
+        visible: true,
+        text: "Sensor Value",
       },
-      y: {
-        title: {
-          display: true,
-          text: "Value",
-        },
-      },
+      // you can fix domain if you know range (e.g. gyro ±2000°/s)
+      // domain: [-300, 300],
     },
   };
 
   return (
-    <div style={{ width: "100%", maxWidth: 1000, margin: "0 auto" }}>
-      <Line options={options} data={chartData} />
+    <div style={{ width: "100%", maxWidth: 900, margin: "0 auto" }}>
+      <VChart spec={spec} />
     </div>
   );
 }
+
