@@ -54,7 +54,7 @@ export default function IMUGraph() {
         setChartData(flattened);
       });
 
-    // 2) Subscribe to new INSERTs using v2 Real-time API
+    // 2) Subscribe to new INSERTs using V2 Real-time API
     const channel = supabaseClient
       .channel("imu_samples_channel")
       .on(
@@ -82,7 +82,7 @@ export default function IMUGraph() {
     };
   }, []);
 
-  // 3) Build VChart spec
+  // 3) Build VChart spec without explicitly setting legends
   const spec: ILineChartSpec = {
     type: "line",
     data: [
@@ -105,13 +105,6 @@ export default function IMUGraph() {
     padding: [40, 20, 20, 60],
     tooltip: {
       trigger: ["hover", "click"],
-    },
-    // Adjusted legend (removed invalid "position": "top")
-    legends: {
-      visible: true,
-      orient: "horizontal",
-      // If you want to control vertical placement, you can set:
-      // position: "start"  // ("start" | "end" | "middle")
     },
     line: {
       state: {
