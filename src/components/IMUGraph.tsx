@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { VChart } from "@visactor/react-vchart";
 import type { ILineChartSpec } from "@visactor/vchart";
-import { getsupabaseClient } from "@/lib/supabaseClient";
+import { supabaseClient } from "@/lib/supabaseClient";
 
 type IMUSample = {
   timestamp: string;
