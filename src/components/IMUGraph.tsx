@@ -37,6 +37,10 @@ export default function IMUGraph() {
           console.error("Supabase fetch error:", error);
           return;
         }
+        
+        console.log("Raw rows from Supabase:", data);
+       setRawRows(data as IMUSample[]);
+        
         const rows = data as IMUSample[];
         const flattened = rows.flatMap((row) => {
           const ts = new Date(row.created_at).toLocaleTimeString("en-US", {
@@ -96,6 +100,12 @@ export default function IMUGraph() {
 
   return (
     <div style={{ width: "100%", maxWidth: 900, margin: "0 auto" }}>
+        <h3>Raw Supabase Rows:</h3>
+    <pre style={{ background: "#f0f0f0", padding: 10, maxHeight: 200, overflow: "auto" }}>
+      {rawRows === "loading"
+        ? "Loading rows…"
+        : JSON.stringify(rawRows, null, 2)}
+    </pre>
       <VChart spec={spec} />
     </div>
   );
