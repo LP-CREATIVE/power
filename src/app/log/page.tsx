@@ -1,11 +1,10 @@
 // power/src/app/log/page.tsx
 "use client";
+
 import dynamic from "next/dynamic";
 
-// Dynamically import so Chart.js only runs in the browser.
-// From here (src/app/log/page.tsx) → IMUGraph is at src/app/components/IMUGraph.tsx,
-// so the relative path is "../components/IMUGraph".
-const IMUGraph = dynamic(() => import("../components/IMUGraph"), {
+// ↓ from app/log/page.tsx → ../../components/IMUGraph
+const IMUGraph = dynamic(() => import("../../components/IMUGraph"), {
   ssr: false,
 });
 
