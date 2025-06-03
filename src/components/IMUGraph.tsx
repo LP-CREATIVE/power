@@ -107,7 +107,7 @@ export default function IMUGraph() {
     tooltip: {
       trigger: ["hover", "click"],
     },
-    legend: {
+    legends: {
       visible: true,
       position: "top",
       orient: "horizontal",
