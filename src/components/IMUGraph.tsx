@@ -22,12 +22,10 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // 1) Fetch the latest IMU rows
+    // 1) Fetch the latest IMU rows (no generic on select—cast later)
     supabaseClient
       .from("imu_samples")
-      .select<Pick<IMUSample, "timestamp" | "ax" | "ay" | "az" | "gx" | "gy" | "gz">>(
-        "timestamp, ax, ay, az, gx, gy, gz"
-      )
+      .select("timestamp, ax, ay, az, gx, gy, gz")
       .order("timestamp", { ascending: true })
       .limit(1000)
       .then(({ data, error }) => {
@@ -35,13 +33,14 @@ export default function IMUGraph() {
           console.error("Supabase fetch error:", error);
           return;
         }
-        if (!data) {
-          return;
-        }
+        if (!data) return;
+
+        // Cast data to IMUSample[]
+        const rows = data as IMUSample[];
 
         // Flatten each row into six points
         const flattened: Array<{ timestamp: string; axis: string; value: number }> = [];
-        data.forEach((row) => {
+        rows.forEach((row) => {
           const ts = new Date(row.timestamp).toLocaleTimeString("en-US", {
             hour12: false,
           });
@@ -55,7 +54,7 @@ export default function IMUGraph() {
         });
 
         setChartData(flattened);
-      }); // <-- close .then()
+      });
 
     // 2) Subscribe to new INSERTs
     const subscription = supabaseClient
