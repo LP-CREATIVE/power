@@ -1,4 +1,5 @@
 // power/src/app/log/page.tsx
+"use client"
 import dynamic from "next/dynamic";
 
 // Dynamically import so Chart.js only runs in the browser.
