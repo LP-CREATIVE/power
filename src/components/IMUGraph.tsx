@@ -22,7 +22,7 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // 1) Fetch the latest IMU rows (no generic on select—cast later)
+    // 1) Fetch the latest IMU rows
     supabaseClient
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -35,11 +35,9 @@ export default function IMUGraph() {
         }
         if (!data) return;
 
-        // Cast data to IMUSample[]
         const rows = data as IMUSample[];
-
-        // Flatten each row into six points
         const flattened: Array<{ timestamp: string; axis: string; value: number }> = [];
+
         rows.forEach((row) => {
           const ts = new Date(row.timestamp).toLocaleTimeString("en-US", {
             hour12: false,
@@ -56,31 +54,36 @@ export default function IMUGraph() {
         setChartData(flattened);
       });
 
-    // 2) Subscribe to new INSERTs
-    const subscription = supabaseClient
-      .from("imu_samples")
-      .on("INSERT", ({ new: newRow }: { new: IMUSample }) => {
-        const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", {
-          hour12: false,
-        });
-        setChartData((prev) => [
-          ...prev,
-          { timestamp: ts, axis: "ax", value: newRow.ax },
-          { timestamp: ts, axis: "ay", value: newRow.ay },
-          { timestamp: ts, axis: "az", value: newRow.az },
-          { timestamp: ts, axis: "gx", value: newRow.gx },
-          { timestamp: ts, axis: "gy", value: newRow.gy },
-          { timestamp: ts, axis: "gz", value: newRow.gz },
-        ]);
-      })
+    // 2) Subscribe to new INSERTs using the v2 Real-time API
+    const channel = supabaseClient
+      .channel("imu_samples_channel")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "imu_samples" },
+        ({ new: newRow }: { new: IMUSample }) => {
+          const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", {
+            hour12: false,
+          });
+          setChartData((prev) => [
+            ...prev,
+            { timestamp: ts, axis: "ax", value: newRow.ax },
+            { timestamp: ts, axis: "ay", value: newRow.ay },
+            { timestamp: ts, axis: "az", value: newRow.az },
+            { timestamp: ts, axis: "gx", value: newRow.gx },
+            { timestamp: ts, axis: "gy", value: newRow.gy },
+            { timestamp: ts, axis: "gz", value: newRow.gz },
+          ]);
+        }
+      )
       .subscribe();
 
     return () => {
-      supabaseClient.removeSubscription(subscription);
+      // 3) Unsubscribe when the component unmounts
+      channel.unsubscribe();
     };
   }, []);
 
-  // 3) Build VChart spec
+  // 4) Build VChart spec
   const spec: ILineChartSpec = {
     type: "line",
     data: [
