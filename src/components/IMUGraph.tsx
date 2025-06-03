@@ -22,67 +22,34 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // 1) Fetch the latest IMU rows
     supabaseClient
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
       .order("timestamp", { ascending: true })
       .limit(1000)
       .then(({ data, error }) => {
-        if (error) {
+        if (error || !data) {
           console.error("Supabase fetch error:", error);
           return;
         }
-        if (!data) return;
-
         const rows = data as IMUSample[];
-        const flattened: Array<{ timestamp: string; axis: string; value: number }> = [];
-
-        rows.forEach((row) => {
+        const flattened = rows.flatMap((row) => {
           const ts = new Date(row.timestamp).toLocaleTimeString("en-US", {
             hour12: false,
           });
-
-          flattened.push({ timestamp: ts, axis: "ax", value: row.ax });
-          flattened.push({ timestamp: ts, axis: "ay", value: row.ay });
-          flattened.push({ timestamp: ts, axis: "az", value: row.az });
-          flattened.push({ timestamp: ts, axis: "gx", value: row.gx });
-          flattened.push({ timestamp: ts, axis: "gy", value: row.gy });
-          flattened.push({ timestamp: ts, axis: "gz", value: row.gz });
+          return [
+            { timestamp: ts, axis: "ax", value: row.ax },
+            { timestamp: ts, axis: "ay", value: row.ay },
+            { timestamp: ts, axis: "az", value: row.az },
+            { timestamp: ts, axis: "gx", value: row.gx },
+            { timestamp: ts, axis: "gy", value: row.gy },
+            { timestamp: ts, axis: "gz", value: row.gz },
+          ];
         });
-
         setChartData(flattened);
       });
-
-    // 2) Subscribe to new INSERTs via Supabase v2 Realtime
-    const channel = supabaseClient
-      .channel("imu_samples_channel")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "imu_samples" },
-        ({ new: newRow }: { new: IMUSample }) => {
-          const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", {
-            hour12: false,
-          });
-          setChartData((prev) => [
-            ...prev,
-            { timestamp: ts, axis: "ax", value: newRow.ax },
-            { timestamp: ts, axis: "ay", value: newRow.ay },
-            { timestamp: ts, axis: "az", value: newRow.az },
-            { timestamp: ts, axis: "gx", value: newRow.gx },
-            { timestamp: ts, axis: "gy", value: newRow.gy },
-            { timestamp: ts, axis: "gz", value: newRow.gz },
-          ]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
   }, []);
 
-  // 3) Build a v1‐style ILineChartSpec
   const spec: ILineChartSpec = {
     type: "line",
     data: [
@@ -94,47 +61,6 @@ export default function IMUGraph() {
     xField: "timestamp",
     yField: "value",
     seriesField: "axis",
-    color: [
-      "hsl(200, 70%, 40%)", // ax
-      "hsl(340, 70%, 40%)", // ay
-      "hsl( 60, 70%, 40%)", // az
-      "hsl(  0, 70%, 50%)", // gx
-      "hsl(120, 70%, 40%)", // gy
-      "hsl(280, 70%, 50%)", // gz
-    ],
-    padding: [40, 20, 20, 60],
-
-    // Use 'legends' as an array for v1.x
-    legends: [
-      {
-        visible: true,
-        orient: "horizontal",   // valid in v1
-        position: "middle",     // valid: "start" | "middle" | "end"
-      },
-    ],
-
-    // Use 'axes' array instead of xAxis/yAxis
-    axes: [
-      {
-        orient: "bottom",      // x‐axis
-        title: { text: "Time (HH:MM:SS)", visible: true },
-      },
-      {
-        orient: "left",        // y‐axis
-        title: { text: "Sensor Value", visible: true },
-      },
-    ],
-
-    line: {
-      state: {
-        hover: {
-          lineWidth: 4,
-        },
-      },
-      style: {
-        smooth: true,
-      },
-    },
   };
 
   return (
@@ -143,3 +69,4 @@ export default function IMUGraph() {
     </div>
   );
 }
+
