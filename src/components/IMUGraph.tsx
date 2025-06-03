@@ -7,7 +7,7 @@ import type { ILineChartSpec } from "@visactor/vchart";
 import { getSupabaseClient } from "@/lib/supabaseClient";
 
 type IMUSample = {
-  timestamp: string;
+  created_at: string;
   ax: number;
   ay: number;
   az: number;
@@ -18,7 +18,7 @@ type IMUSample = {
 
 export default function IMUGraph() {
   const [chartData, setChartData] = useState<
-    Array<{ timestamp: string; axis: string; value: number }>
+    Array<{ created_at: string; axis: string; value: number }>
   >([]);
 
   useEffect(() => {
@@ -39,16 +39,16 @@ export default function IMUGraph() {
         }
         const rows = data as IMUSample[];
         const flattened = rows.flatMap((row) => {
-          const ts = new Date(row.timestamp).toLocaleTimeString("en-US", {
+          const ts = new Date(row.created_at).toLocaleTimeString("en-US", {
             hour12: false,
           });
           return [
-            { timestamp: ts, axis: "ax", value: row.ax },
-            { timestamp: ts, axis: "ay", value: row.ay },
-            { timestamp: ts, axis: "az", value: row.az },
-            { timestamp: ts, axis: "gx", value: row.gx },
-            { timestamp: ts, axis: "gy", value: row.gy },
-            { timestamp: ts, axis: "gz", value: row.gz },
+            { created_at: ts, axis: "ax", value: row.ax },
+            { created_at: ts, axis: "ay", value: row.ay },
+            { created_at: ts, axis: "az", value: row.az },
+            { created_at: ts, axis: "gx", value: row.gx },
+            { created_at: ts, axis: "gy", value: row.gy },
+            { created_at: ts, axis: "gz", value: row.gz },
           ];
         });
         setChartData(flattened);
@@ -60,17 +60,17 @@ export default function IMUGraph() {
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "imu_samples" },
         ({ new: newRow }: { new: IMUSample }) => {
-          const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", {
+          const ts = new Date(newRow.created_at).toLocaleTimeString("en-US", {
             hour12: false,
           });
           setChartData((prev) => [
             ...prev,
-            { timestamp: ts, axis: "ax", value: newRow.ax },
-            { timestamp: ts, axis: "ay", value: newRow.ay },
-            { timestamp: ts, axis: "az", value: newRow.az },
-            { timestamp: ts, axis: "gx", value: newRow.gx },
-            { timestamp: ts, axis: "gy", value: newRow.gy },
-            { timestamp: ts, axis: "gz", value: newRow.gz },
+            { created_at: ts, axis: "ax", value: newRow.ax },
+            { created_at: ts, axis: "ay", value: newRow.ay },
+            { created_at: ts, axis: "az", value: newRow.az },
+            { created_at: ts, axis: "gx", value: newRow.gx },
+            { created_at: ts, axis: "gy", value: newRow.gy },
+            { created_at: ts, axis: "gz", value: newRow.gz },
           ]);
         }
       )
