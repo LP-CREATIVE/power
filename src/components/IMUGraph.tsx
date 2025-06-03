@@ -29,8 +29,8 @@ export default function IMUGraph() {
     const supabase = getSupabaseClient(); // create client in browser
     supabase
       .from("imu_samples")
-      .select("timestamp, ax, ay, az, gx, gy, gz")
-      .order("timestamp", { ascending: true })
+      .select("created_at, ax, ay, az, gx, gy, gz")
+      .order("created_at", { ascending: true })
       .limit(1000)
       .then(({ data, error }) => {
         if (error || !data) {
@@ -89,7 +89,7 @@ export default function IMUGraph() {
         values: chartData,
       },
     ],
-    xField: "timestamp",
+    xField: "time",
     yField: "value",
     seriesField: "axis",
   };
