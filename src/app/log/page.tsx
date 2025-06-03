@@ -1,12 +1,7 @@
-// power/src/app/log/page.tsx
+// src/app/log/page.tsx
 "use client";
 
-import dynamic from "next/dynamic";
-
-// ↓ from app/log/page.tsx → ../../components/IMUGraph
-const IMUGraph = dynamic(() => import("../../components/IMUGraph"), {
-  ssr: false,
-});
+import IMUGraph from "@/components/IMUGraph";
 
 export default function LogPage() {
   return (
