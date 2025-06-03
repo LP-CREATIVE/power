@@ -1,4 +1,5 @@
 // components/IMUGraph.tsx
+"use client"
 import { useEffect, useState } from "react";
 import { supabaseClient } from "../lib/supabaseClient";
 import {
