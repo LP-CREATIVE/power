@@ -22,7 +22,7 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // 1) Fetch initial IMU rows
+    // 1) Fetch the latest IMU rows
     supabaseClient
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -54,7 +54,7 @@ export default function IMUGraph() {
         setChartData(flattened);
       });
 
-    // 2) Subscribe to new INSERTs via v2 Realtime
+    // 2) Subscribe to new INSERTs via Supabase v2 Realtime
     const channel = supabaseClient
       .channel("imu_samples_channel")
       .on(
@@ -104,14 +104,16 @@ export default function IMUGraph() {
     ],
     padding: [40, 20, 20, 60],
 
-    // v1‐style legend (singular, not "legends")
-    legend: {
-      visible: true,
-      orient: "horizontal",   // valid in v1
-      position: "middle",     // valid values: "start" | "middle" | "end"
-    },
+    // Use 'legends' as an array for v1.x
+    legends: [
+      {
+        visible: true,
+        orient: "horizontal",   // valid in v1
+        position: "middle",     // valid: "start" | "middle" | "end"
+      },
+    ],
 
-    // v1‐style axes array
+    // Use 'axes' array instead of xAxis/yAxis
     axes: [
       {
         orient: "bottom",      // x‐axis
