@@ -22,6 +22,8 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
+    if (!supabaseClient) return; // Nothing to do if running on the server
+
     supabaseClient
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -48,6 +50,32 @@ export default function IMUGraph() {
         });
         setChartData(flattened);
       });
+
+    const channel = supabaseClient
+      .channel("imu_samples_channel")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "imu_samples" },
+        ({ new: newRow }: { new: IMUSample }) => {
+          const ts = new Date(newRow.timestamp).toLocaleTimeString("en-US", {
+            hour12: false,
+          });
+          setChartData((prev) => [
+            ...prev,
+            { timestamp: ts, axis: "ax", value: newRow.ax },
+            { timestamp: ts, axis: "ay", value: newRow.ay },
+            { timestamp: ts, axis: "az", value: newRow.az },
+            { timestamp: ts, axis: "gx", value: newRow.gx },
+            { timestamp: ts, axis: "gy", value: newRow.gy },
+            { timestamp: ts, axis: "gz", value: newRow.gz },
+          ]);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
   }, []);
 
   const spec: ILineChartSpec = {
@@ -69,4 +97,5 @@ export default function IMUGraph() {
     </div>
   );
 }
+
 
