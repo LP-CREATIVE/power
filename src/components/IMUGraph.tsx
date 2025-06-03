@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { VChart } from "@visactor/react-vchart";
 import type { ILineChartSpec } from "@visactor/vchart";
-import { supabaseClient } from "@/lib/supabaseClient";
+import { getSupabaseClient } from "@/lib/supabaseClient";
 
 type IMUSample = {
   timestamp: string;
@@ -22,16 +22,11 @@ export default function IMUGraph() {
   >([]);
 
   useEffect(() => {
-    // These logs will show the inlined env‐vars in the browser console:
-    console.log("→ URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log("→ KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+    // Verify env-vars in the browser console:
+    console.log("→ NEXT_PUBLIC_SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log("→ NEXT_PUBLIC_SUPABASE_ANON_KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-    const supabase = supabaseClient();
-    if (!supabase) {
-      console.error("Supabase client not initialized");
-      return;
-    }
-
+    const supabase = getSupabaseClient(); // create client in browser
     supabase
       .from("imu_samples")
       .select("timestamp, ax, ay, az, gx, gy, gz")
@@ -105,4 +100,3 @@ export default function IMUGraph() {
     </div>
   );
 }
-
