@@ -20,10 +20,10 @@ export default function IMUGraph() {
   const [chartData, setChartData] = useState<Array<{ timestamp: string; axis: string; value: number }>>([]);
 
   useEffect(() => {
-    // 1) Fetch the latest IMU rows from Supabase
-    supabaseClient
-      .from<IMUSample>("imu_samples")
-      .select("timestamp, ax, ay, az, gx, gy, gz")
+    / supabaseClient
+      .from("imu_samples")
+      .select<Pick<IMUSample, "timestamp" | "ax" | "ay" | "az" | "gx" | "gy" | "gz">>(
+        "timestamp, ax, ay, az, gx, gy, gz"
       .order("timestamp", { ascending: true })
       .limit(1000)
       .then(({ data, error }) => {
