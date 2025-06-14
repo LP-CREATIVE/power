@@ -1,4 +1,4 @@
-export const convertions = [
+export const conversions = [
   {
     name: "OL/DL",
     value: 3260,
