@@ -4,8 +4,9 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import "@/style/globals.css";
 import { Providers } from "./providers";
+import { Gabarito } from "next/font/google";
 
-
+const gabarito = Gabarito({ subsets: ["latin"], variable: "--font-gabarito" });
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-   <body className="bg-background font-sans">
+   <body className={cn("bg-background font-sans", gabarito.variable)}>
 
         <Providers>
           <div className="flex min-h-[100dvh]">
