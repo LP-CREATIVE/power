@@ -5,7 +5,8 @@ interface PageProps {
   params: { id: string };
 }
 
-export default function PlayerProfilePage({ params }: PageProps) {
+export default async function PlayerProfilePage({ params }: PageProps) {
+
   const player = getPlayerById(Number(params.id));
 
   if (!player) {
