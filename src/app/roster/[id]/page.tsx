@@ -1,12 +1,7 @@
 import Link from 'next/link';
 import { getPlayerById } from '@/lib/data';
 
-interface PageProps {
-  params: { id: string };
-}
-
-export default async function PlayerProfilePage({ params }: PageProps) {
-
+export default async function PlayerProfilePage({ params }: { params: { id: string } }) {
   const player = getPlayerById(Number(params.id));
 
   if (!player) {
