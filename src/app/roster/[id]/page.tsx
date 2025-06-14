@@ -4,7 +4,8 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 // ✅ This is correct — do NOT treat `props` as a Promise
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = Number(params.id);
   const player = await getPlayerById(id);
 
