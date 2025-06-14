@@ -1,4 +1,4 @@
-import { Gauge, type LucideIcon, Users, Dumbbell, ClipboardList, MessagesSquare, Bot } from "lucide-react";
+import { Gauge, type LucideIcon, Users, User, Dumbbell, ClipboardList, MessagesSquare, Bot } from "lucide-react";
 
 export type SiteConfig = typeof siteConfig;
 export type Navigation = {
@@ -23,7 +23,12 @@ export const navigations: Navigation[] = [
     name: "Roster",
     href: "/roster",
   },
-   {
+  {
+    icon: User,
+    name: "Player Profile",
+    href: "/player-profile",
+  },
+  {
     icon: Dumbbell,
     name: "Workouts",
     href: "/workouts",
