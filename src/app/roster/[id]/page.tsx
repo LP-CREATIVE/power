@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { getPlayerById } from '@/lib/data';
+import Link from "next/link";
+import { getPlayerById } from "@/lib/data";
 
-export default async function PlayerProfilePage({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const player = getPlayerById(Number(params.id));
 
   if (!player) {
